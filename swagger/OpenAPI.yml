@@ -17,13 +17,18 @@ servers:
   - url: 'https://golangproject.site'
 tags:
   - name: Auth
-    description: Layanan untuk authentikasi user
+    description: Layanan untuk authentikasi User
   - name: Users
-    description: Layanan yang mengorganisir data user
-  - name: News
-    description: Layanan yang mengorganisir data News
-  - name: Comment
-    description: Layanan yang mengorganisir Comment
+    description: Layanan yang mengorganisir data User
+  - name: Products
+    description: Layanan yang mengorganisir data Product
+  - name: Orders
+    description: Layanan yang mengorganisir data Order
+  - name: Carts
+    description: Layanan yang mengorganisir data Cart  
+  - name: Payments
+    description: Layanan yang mengorganisir data Payment
+
 
 paths:
   /login:
@@ -41,14 +46,14 @@ paths:
               userData1:
                 description: "Example data  user 1"
                 value: {
-                  email: "jungkook@gmail.com",
-                  password: "jung123"
+                  email: "thanos@gmail.com",
+                  password: "madtitan123"
                 }
               userData2:
                 description: "Example data  user 2"
                 value: {
-                  username: "eunwoo@gmail.com",
-                  password: "eun123"
+                  username: "seethebat@gmail.com",
+                  password: "waynee123"
                 }
       responses:
         '200':
@@ -65,9 +70,10 @@ paths:
                     code : 200,
                     data: {
                       "user_id": 1,
-                      "user_name": "jungkook",
-                      "email" : "inggakbisaberdiri@gmail.com",
-                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co"
+                      "user_name": "batman",
+                      "email" : "seethebat@gmail.com",
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co",
+                    role : "admin",
                     }
                   }
                 responseData2:
@@ -77,9 +83,9 @@ paths:
                     "code" : 200,
                     "data": {
                       user_id: 2,
-                      user_name: "eunwoo",
+                      user_name: "thanos",
                       token: "AyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co",
-                      
+                      role: "user",
                     }
                   }
         '400':
@@ -88,14 +94,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response failed 1
-                  value: {
-                    "code" : 400,
-                    "message": "email or password incorrect",
-                    "data": null
-                  }
-                responseData2:
-                  description: response failed 2
+                  description: response failed
                   value: {
                     "code" : 400,
                     "message": "email or password incorrect",
@@ -107,7 +106,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response failed 1
+                  description: response failed
                   value: {
                     "code" : 500,
                     "message": "Internal server Error",
@@ -149,7 +148,8 @@ paths:
                       "alamat": "Jln. Baru Bangun No.7, Jakarta - Indonesia",
                       "notelp": "081223455432",
                       "created_at": "2022-07-22T05:56:50.248Z",
-                      "image_url": "server/antonio.jpg"
+                      "image_url": "server/antonio.jpg",
+                      "role":"user"
                     }
                   }
         '400':
@@ -172,7 +172,7 @@ paths:
                 responseData1:
                   description: Internal Server error
                   value: {
-                    message: "Server Error",
+                    message: "Internal Server error",
                     code : 500,
                     data : null
                   }
@@ -194,7 +194,7 @@ paths:
                   email: "thanos@gmail.com",
                   password: "madtitan123",
                   fullname: "The Mad Titan Thanos",
-                  photo: thanos.jpg
+                  photo: "thanos.jpg"
                 }
               userData2:
                 description: "Example data  user 2"
@@ -203,7 +203,7 @@ paths:
                   email: "seethebat@gmail.com",
                   password: "waynee123",
                   fullname: "Not Bruce Wayne",
-                  photo: batman.jpg
+                  photo: "batman.jpg"
                 }
       responses:
         '200':
@@ -212,7 +212,7 @@ paths:
             multipart/form-data:
               examples:
                 responseData1:
-                  description: response success 1
+                  description: response success
                   value: {
                     message: "success to insert data",
                     code : 200,
@@ -224,7 +224,7 @@ paths:
             multipart/form-data:
               examples:
                 responseData1:
-                  description: response failed 1
+                  description: response failed
                   value: {
                     message: "all input data must be filled",
                     code : 400,
@@ -269,7 +269,7 @@ paths:
                   password: "An43ddz",
                   alamat: "Jln. Baru Bangun No.7, Jakarta - Indonesia",
                   notelp: "081223455432",
-                  file: antonio.jpg
+                  file: "antonio.jpg"
                 }
               userData2:
                 description: "Example data  user 2"
@@ -279,7 +279,7 @@ paths:
                   password: "Homelander666",
                   alamat: "Jln. Lama No.5, Jakarta - Indonesia",
                   notelp: "081278901234",
-                  file: starr.jpg
+                  file: "starr.jpg"
                 }
       responses:
         '200':
@@ -288,7 +288,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response success 1
+                  description: response success
                   value: {
                     message: "success to insert data",
                     code : 200,
@@ -311,7 +311,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response success 1
+                  description: response success
                   value: {
                     message: "Internal server Error",
                     code : 500,
@@ -339,9 +339,10 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response success 1
+                  description: response success
                   value: {
                     message: "success to delete",
+                    code : 200,
                   }
         '400':
           description: Failed Response
@@ -349,14 +350,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response failed 1
-                  value: {
-                    message: "Bad Request",
-                    code : 400,
-                    data : null
-                  }
-                responseData2:
-                  description: response failed 2
+                  description: response failed
                   value: {
                     message: "Bad Request",
                     code : 400,
@@ -374,19 +368,19 @@ paths:
                     code : 500,
                     data : null
                   }
-  /news:
+  /products:
     get:
       tags:
-        - News
-      summary: Get All News
-      description: Get All News from database
+        - Products
+      summary: Get All Product
+      description: Get All Product from database
       responses:
         '200':
-          description: Success Response get all News
+          description: Success Response get all Product
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/responseAllNewsuccess'
+                $ref: '#/components/schemas/responseAllProductsuccess'
               examples:
                 responseData1:
                   description: response success
@@ -394,7 +388,9 @@ paths:
                     message: "success",
                     data: [{
                       id: 1,
-                      content: "Hello guys... hari ini pada liburan kemana?? cek this out",
+                      nama: "Sepatu keren",
+                      price: 100000,
+                      stock: 99,
                       created_at: "2022-07-26T18:35:01.231Z",
                       "image_url": "image/im.jpg",
                       user: {
@@ -405,7 +401,7 @@ paths:
                     }]
                   }
         '400':
-          description: Cannot get all News
+          description: Cannot get all Product
           content:
             application/json:
               examples:
@@ -428,8 +424,8 @@ paths:
                   }
     post:
       tags:
-        - News
-      summary: Add new News data
+        - Products
+      summary: Add new Product data
       description: Add new data to database
       security:
         - JWTAuth: []
@@ -437,10 +433,10 @@ paths:
             content:
               multipart/form-data:
                 schema:
-                  $ref: '#/components/schemas/requestNews'
+                  $ref: '#/components/schemas/requestProduct'
                 examples:
-                  newsData1:
-                    description: "Example news input"
+                  productData1:
+                    description: "Example Product input"
                     value: {
                         content: "Hello guys... hari ini pada liburan kemana?? cek this out",
                         created_at: "2022-07-26T18:35:01.231Z",
@@ -456,7 +452,7 @@ paths:
                 responseData1:
                   description: response success
                   value: {
-                    message: "success to insert news",
+                    message: "success to insert Product",
                     code : 200,
                   }
         '400':
@@ -483,24 +479,24 @@ paths:
                   }
     put:
       tags:
-        - News
-      summary: Update News data
-      description: Update News by id
+        - Products
+      summary: Update Product data
+      description: Update Product by id
       security:
         - JWTAuth: []     
       parameters:
         - in: path
-          name: id_news
+          name: id_product
           required: true
           schema:
             type: number
             example: 1
-          description: ID News
+          description: ID Product
       requestBody:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/requestUpdateNews'
+              $ref: '#/components/schemas/requestUpdateProduct'
             examples:
               userData1:
                 description: "Example data  user 1"
@@ -529,7 +525,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response success 1
+                  description: Failed Response
                   value: {
                     message: "Bad Request",
                     code : 400,
@@ -541,7 +537,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response success 1
+                  description: Failed Response
                   value: {
                     message: "Internal server error",
                     code : 500,
@@ -549,19 +545,19 @@ paths:
                   }   
     delete:
       tags:
-        - News
-      summary: Delete News data
-      description: Delete news by id news
+        - Products
+      summary: Delete Products data
+      description: Delete Products by id
       security:
         - JWTAuth: []
       parameters:
         - in: path
-          name: idnews
+          name: idproducts
           required: true
           schema:
             type: number
             example: 1
-          description: id_news
+          description: id_products
       responses:
         '200':
           description: Success Response
@@ -598,12 +594,12 @@ paths:
                     code : 500,
                     data : null
                   }           
-  /news/{id}:
+  /products/{id}:
     get:
       tags:
-        - News
-      summary: Get news by id
-      description: Get news by id
+        - Products
+      summary: Get Product by id
+      description: Get Product by id
       parameters:
         - in: path
           name: id
@@ -611,14 +607,14 @@ paths:
           schema:
             type: number
             example: 1
-          description: id news
+          description: id Product
       responses:
         '200':
-          description: Success Response get a news
+          description: Success Response get a Product
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/responseNewsuccess'
+                $ref: '#/components/schemas/responseProductsuccess'
               examples:
                 responseData1:
                   description: response success
@@ -646,7 +642,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response failed
+                  description: Failed Response
                   value: {
                     message: "Bad Request",
                     code : 400,
@@ -657,26 +653,26 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response failed
+                  description: Failed Response
                   value: {
                     message: "Internal Server Error",
                     code : 500,
                   }
     
     
-  /comments:
+  /orders:
     get:
       tags:
-        - Comment
-      summary : Get Comment
-      description: Get All Comments
+        - Orders
+      summary : Get Orders
+      description: Get All Orders
       responses:
         '200':
-          description: Success Response get all Comment
+          description: Success Response get all Orders
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/responseCommentSuccess'
+                $ref: '#/components/schemas/responseOrderSuccess'
               examples:
                 responseData1:
                   description: response success
@@ -704,7 +700,7 @@ paths:
                     ]
                   }
         '400':
-          description: Cannot get all Comment
+          description: Cannot get all Orders
           content:
             application/json:
               examples:
@@ -721,7 +717,7 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: response failed 1
+                  description: response failed
                   value: {
                     "message" : "Internal Server Error",
                     code : 500,
@@ -729,19 +725,19 @@ paths:
                   }
     post:
       tags:
-        - Comment
-      summary : Add new Comment
-      description: Add new Comment
+        - Orders
+      summary : Add new Orders
+      description: Add new Orders
       security:
         - JWTAuth: []
       requestBody:
             content:
               multipart/form-data:
                 schema:
-                  $ref: '#/components/schemas/requestComment'
+                  $ref: '#/components/schemas/requestOrders'
                 examples:
                   newsData1:
-                    description: "Example Comment"
+                    description: "Example Orders"
                     value: {
                         content: "Kepantai seru...",
                         created_at: "2022-07-26T18:35:01.231Z",
@@ -757,7 +753,7 @@ paths:
                 responseData1:
                   description: response success
                   value: {
-                    message: "success to insert Comment",
+                    message: "success to insert Orders",
                     code : 200,
                   }
         '400':
@@ -786,19 +782,19 @@ paths:
                   }
     delete:
       tags:
-        - Comment
-      summary : Delete Comment
-      description: Delete Comment by id
+        - Orders
+      summary : Delete Order
+      description: Delete Order by id
       security:
         - JWTAuth: []
       requestBody:
             content:
               multipart/form-data:
                 schema:
-                  $ref: '#/components/schemas/requestComment'
+                  $ref: '#/components/schemas/requestOrders'
                 examples:
                   newsData1:
-                    description: "Example Comment"
+                    description: "Example Orders"
                     value: {
                         content: "Kepantai seru...",
                         created_at: "2022-07-26T18:35:01.231Z",
@@ -826,7 +822,7 @@ paths:
                 responseData1:
                   description: response failed
                   value: {
-                    message: "Delete Comment Error",
+                    message: "Delete Orders Error",
                     code : 400,
                     data : null
                   }
@@ -842,12 +838,12 @@ paths:
                     code : 500,
                     data : null
                   }
-  /comments/{id}:
+  /orders/{id}:
     get:
       tags:
-      - Comment
-      summary : Get Comment
-      description: Get comment by id
+      - Orders
+      summary : Get Order
+      description: Get Order by id
       parameters:
         - in: path
           name: id
@@ -855,14 +851,14 @@ paths:
           schema:
             type: number
             example: 1
-          description: id comment
+          description: id Order
       responses:
         '200':
-          description: Success Response get a comment
+          description: Success Response get a Order
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/responseCommentSuccess'
+                $ref: '#/components/schemas/responseOrderSuccess'
               examples:
                 responseData1:
                   description: response success
@@ -870,7 +866,7 @@ paths:
                     message: "success",
                     code : 200,
                     data: [{
-                      comments:
+                      orders:
                       [
                       {
                         id: 1,
@@ -1009,7 +1005,7 @@ components:
           type: string
           minLength: 1
 
-    requestNews:
+    requestProducts:
       type: object
       properties:
         "content":
@@ -1025,7 +1021,7 @@ components:
           type: number
           minLength: 1
 
-    responseAllNewsuccess:
+    responseAllProductsuccess:
       type: object
       properties: {
         "message": {
@@ -1036,7 +1032,7 @@ components:
           }
       }
 
-    responseNewsuccess:
+    responseProductsuccess:
       type: object
       properties: {
       
@@ -1048,7 +1044,7 @@ components:
             }
       }
 
-    requestUpdateNews:
+    requestUpdateProducts:
       type: object
       properties:
         "content":
@@ -1066,7 +1062,7 @@ components:
         "sold":
           type: number
 
-    requestComment:
+    requestOrders:
       type: object
       properties:
         "content":
@@ -1079,7 +1075,7 @@ components:
           type: number
           minLength: 1
 
-    responseCommentSuccess:
+    responseOrdersSuccess:
       type: object
       properties: {
       
