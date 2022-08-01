@@ -1,28 +1,19 @@
-openapi: 3.0.3
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Rafkimaisya/GROUP_4/1.0.0
+  - url: https://golangproject.site
+    description: consume api link
 info:
-  title: Sosial Media
-  description: Sosial Media APP with Golang and React JS
+  description: This is a simple API
+  version: "1.0.0"
+  title: 4-E_STORE
   contact:
-    name: Group5
-    email: sos@gmail.com
+    email: alta@alterra.com
   license:
     name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: '1.0.0'
-servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://app.swaggerhub.com/apis/GolangProject/SosialMedia/1.0.1
-  - url: http://localhost:8000
-    description: requestMethod
-tags:
-  - name: Auth
-    description: Layanan untuk authentikasi user
-  - name: Users
-    description: Layanan yang mengorganisir data user
-  - name: News
-    description: Layanan yang mengorganisir data News
-  - name: Comment
-    description: Layanan yang mengorganisir Comment
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 
 paths:
   /login:
@@ -40,14 +31,14 @@ paths:
               userData1:
                 description: "Example data  user 1"
                 value: {
-                  email: "jungkook@gmail.com",
-                  password: "jung123"
+                  email: "andrigunawan@gmail.com",
+                  password: "andri12"
                 }
               userData2:
                 description: "Example data  user 2"
                 value: {
-                  username: "eunwoo@gmail.com",
-                  password: "eun123"
+                  email: "cahyo@gmail.com",
+                  password: "Cahyo12"
                 }
       responses:
         '200':
@@ -60,24 +51,22 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 200,
                     message: "Login Success",
-                    code : 200,
                     data: {
                       "user_id": 1,
-                      "user_name": "jungkook",
+                      "user_name": "andri gunawan",
                       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co"
                     }
                   }
                 responseData2:
-                  description: response success 2,
+                  description: response success 2
                   value: {
                     "message": "Login Success",
-                    "code" : 200,
                     "data": {
                       user_id: 2,
-                      user_name: "eunwoo",
-                      token: "AyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co",
-                      
+                      user_name: "cahyo",
+                      token: "AyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co"
                     }
                   }
         '400':
@@ -88,89 +77,20 @@ paths:
                 responseData1:
                   description: response failed 1
                   value: {
-                    "code" : 400,
-                    "message": "email or password incorrect",
-                    "data": null
+                    message: "email or password incorrect"
                   }
                 responseData2:
                   description: response failed 2
                   value: {
-                    "code" : 400,
-                    "message": "email or password incorrect",
-                    "data": null
-                  }
-        '500':
-          description: Internal server Error
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: response failed 1
-                  value: {
-                    "code" : 500,
-                    "message": "Internal server Error",
-                    "data": null
+                    code: 200,
+                    message: "email or password incorrect"
                   }
   /users:
-    get:
-      tags:
-        - Users
-      summary: for get All User
-      description: Bisa diaplikasikan ketika user ingin melihat profil
-      security:
-        - JWTAuth: []
-      responses:
-        '200':
-          description: Success Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseGetUserSuccess'
-              examples:
-                responseData1:
-                  description: response success 1
-                  value: {        
-                    message: "success",
-                    code : 200,
-                    data: {
-                      "id": 1,
-                      "username": "antoniobanderas",
-                      "email": "antoniobanderas@gmail.com",
-                      "alamat": "Jln. Baru Bangun No.7, Jakarta - Indonesia",
-                      "notelp": "081223455432",
-                      "created_at": "2022-07-22T05:56:50.248Z",
-                      "image_url": "server/antonio.jpg"
-                    }
-                  }
-        '400':
-          description: Failed Response
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: Failed Response
-                  value: {
-                    message: "Bad Request",
-                    code : 400,
-                    data : null
-                  }
-        '500':
-          description: Internal Server error
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: Internal Server error
-                  value: {
-                    message: "Server Error",
-                    code : 500,
-                    data : null
-                  }
     post:
       tags:
         - Users
       summary: Registration User
-      description: Fitur Registrasi User
+      description: Saat registrasi user harus input semua field
       requestBody:
         content:
           multipart/form-data:
@@ -180,20 +100,22 @@ paths:
               userData1:
                 description: "Example data  user 1"
                 value: {
-                  username: "jungkook",
-                  email: "jungkook@gmail.com",
-                  password: "jung123",
-                  fullname: "jungkook btw",
-                  photo: jungkook.jpg
+                  username: "andri gunawan",
+                  email: "andrigunawan@gmail.com",
+                  password: "andri12",
+                  alamat: "Jln. Baru No.4, Jakarta - Indonesia",
+                  notelp: "08123247689",
+                  file: profile1.jpg
                 }
               userData2:
                 description: "Example data  user 2"
                 value: {
-                  username: "eunwoo",
-                  email: "eunwoo@gmail.com",
-                  password: "eun123",
-                  fullname: "cha eun woo",
-                  photo: eunwoo.jpg
+                  username: "cahyo",
+                  email: "cahyo@gmail.com",
+                  password: "cahyo12",
+                  alamat: "Jln. Lama No.5, Jakarta - Indonesia",
+                  notelp: "082000123321",
+                  file: profile2.jpg
                 }
       responses:
         '200':
@@ -204,9 +126,14 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 200,
                     message: "success to insert data",
-                    code : 200,
-                    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co"
+                  }
+                responseData2:
+                  description: response success 2
+                  value: {
+                    code: 200,
+                    message: "success to insert data",
                   }
         '400':
           description: Failed Response
@@ -217,26 +144,85 @@ paths:
                   description: response failed 1
                   value: {
                     message: "all input data must be filled",
-                    code : 400,
                   }
-        '500':
-          description: Failed Response
+                responseData2:
+                  description: response failed 2
+                  value: {
+                    code : 400,
+                    message: "all input data must be filled",
+                  }
+  /users/{iduser}:
+    get:
+      tags:
+        - Users
+      summary: for get User By Id
+      description: Bisa diaplikasikan ketika user ingin melihat profilnya
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: iduser
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: user_id
+      responses:
+        '200':
+          description: Success Response
           content:
-            multipart/form-data:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetUserSuccess'
               examples:
                 responseData1:
-                  description: Internal Server Error
+                  description: response success 1
                   value: {
-                    message: "Internal Server Error",
-                    code : 500,
+              
+                    message: "success",
+                    data: {
+                     "id"     : 1,
+                     "full_name": "andri gunawan",
+                     "username": "andri2",
+                     "email": "andrigunawan@gmail.com",
+                     "address": "Jln. Baru No.4, Jakarta - Indonesia",
+                     "phone": "08123247689",
+                     "created_at": "2022-06-27T05:56:50.248Z",
+                     "photo_url": "https://storage.googleapis.com/bucket-project-2/profil1.jpg"
+                    }
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code: 400,
+                    message: "Bad Request",
+                  }
+                responseData2:
+                  description: response success 2
+                  value: {
+                    code: 400,
+                    message: "Bad Request",
                   }
     put:
       tags:
         - Users
-      summary: Update data user
-      description: Update data user berdasarkan id 
+      summary: for put User By Id
+      description: Bisa diaplikasikan ketika user ingin update profilnya & semua field tidak boleh kosong
       security:
         - JWTAuth: []     
+      parameters:
+        - in: path
+          name: iduser
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: user_id
       requestBody:
         content:
           multipart/form-data:
@@ -246,22 +232,24 @@ paths:
               userData1:
                 description: "Example data  user 1"
                 value: {
-                  username: "antoniobanderas",
-                  email: "antoniobanderas@gmail.com",
-                  password: "An43ddz",
-                  alamat: "Jln. Baru Bangun No.7, Jakarta - Indonesia",
-                  notelp: "081223455432",
-                  file: antonio.jpg
+                  username: "andri2",
+                  full_name: "andri wijaya",
+                  email: "andrigunawan@gmail.com",
+                  password: "andri12",
+                  address: "Jln. Baru No.4, Jakarta - Indonesia",
+                  phone: "08123247689",
+                  file: profile3.jpg
                 }
               userData2:
                 description: "Example data  user 2"
                 value: {
-                  username: "AntonyStarr",
-                  email: "homelander@gmail.com",
-                  password: "Homelander666",
-                  alamat: "Jln. Lama No.5, Jakarta - Indonesia",
-                  notelp: "081278901234",
-                  file: starr.jpg
+                  username: "andri2",
+                  full_name: "andri wijaya",
+                  email: "cahyo@gmail.com",
+                  password: "andri12",
+                  address: "Jln. Baru No.4, Jakarta - Indonesia",
+                  phone: "08123247689",
+                  file: profile3.jpg
                 }
       responses:
         '200':
@@ -272,8 +260,14 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 200,
                     message: "success to insert data",
-                    code : 200,
+                  }
+                responseData2:
+                  description: response success 2
+                  value: {
+                    code: 200,
+                    message: "success to insert data",
                   }
         '400':
           description: Failed Response
@@ -281,24 +275,18 @@ paths:
             application/json:
               examples:
                 responseData1:
-                  description: Failed Response
-                  value: {
-                    message: "failed to update data",
-                    code : 400,
-                    data : null
-                  }
-        '500':
-          description: Internal server Error
-          content:
-            application/json:
-              examples:
-                responseData1:
                   description: response success 1
                   value: {
-                    message: "Internal server Error",
-                    code : 500,
-                    data : null
+                    code: 400,
+                    message: "failed to update data",
                   }
+                responseData2:
+                  description: response success 2
+                  value: {
+                    code: 400,
+                    message: "failed to update data",
+                  }
+
     delete:
       tags:
         - Users
@@ -306,6 +294,14 @@ paths:
       description: Bisa diaplikasikan ketika user ingin melihat profilnya
       security:
         - JWTAuth: []
+      parameters:
+        - in: path
+          name: iduser
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: user_id
       responses:
         '200':
           description: Success Response
@@ -315,6 +311,7 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 200,
                     message: "success to delete",
                   }
         '400':
@@ -330,79 +327,72 @@ paths:
                 responseData2:
                   description: response failed 2
                   value: {
+                    code: 400,
                     message: "Bad Request",
-                    code : 400,
-                    data : null
                   }
-        '500':
-          description: Failed Response
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: response failed 1
-                  value: {
-                    message: "Bad Request",
-                    code : 500,
-                    data : null
-                  }
-  /News:
+  /products:
     get:
       tags:
-        - News
-      description: Get All News
+        - products
+      description: Get All product
       responses:
         '200':
-          description: Success Response get all News
+          description: Success Response get all product
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/responseAllNewsuccess'
+                $ref: '#/components/schemas/responseAllproductSuccess'
               examples:
                 responseData1:
                   description: response success 1
                   value: {
+
                     message: "success",
                     data: [{
-                      id: 1,
-                      content: "Hello guys... hari ini pada liburan kemana?? cek this out",
-                      created_at: "2022-07-26T18:35:01.231Z",
-                      "image_url": "image/im.jpg",
-                      user: {
-                        id: 2,
-                        user_name: "AntonyStarr"
-                      }
+                       id: 1,
+                      name: "Batu",
+                      price: 150000,
+                      quantity: 3,
+                      description: "terlaris pada tahun 2010",
+                      image_url : "https://storage.googleapis.com/bucket-project-2/download1.jpg",
+                      sold: 0,
+                      created_at: "2022-06-26T18:35:01.231Z"
                     }]
                   }
         '500':
-          description: Cannot get all News
+          description: Cannot get all product
           content:
             application/json:
               examples:
                 responseData1:
                   description: response failed 1
                   value: {
-                    "message" : "failed to get all data",
+                    "code" : 500,
+                   "message" : "failed to get all data",
                   }
     post:
       tags:
-        - News
-      description: Add new News
+        - products
+      description: Add new product
       security:
         - JWTAuth: []
       requestBody:
             content:
               multipart/form-data:
                 schema:
-                  $ref: '#/components/schemas/requestNews'
+                  $ref: '#/components/schemas/requestproduct'
                 examples:
-                  newsData1:
-                    description: "Example news input"
+                  productData1:
+                    description: "Example product input"
                     value: {
-                        content: "Hello guys... hari ini pada liburan kemana?? cek this out",
-                        created_at: "2022-07-26T18:35:01.231Z",
-                        image_url: "image/im.jpg",
-                        user_id: 2,
+                        id: 1,
+                      name: "Batu",
+                      price: 150000,
+                      quantity: 3,
+                      description: "terlaris pada tahun 2010",
+                      image_url : "https://storage.googleapis.com/bucket-project-2/download1.jpg",
+                      sold: 0,
+                      created_at: "2022-06-26T18:35:01.231Z",
                         }
       responses:
         '200':
@@ -413,7 +403,8 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
-                    message: "success to insert news",
+                    code: 200,
+                    message: "success to insert product",
                   }
         '400':
           description: Failed Response
@@ -423,36 +414,93 @@ paths:
                 responseData1:
                   description: response failed 1
                   value: {
+                    code: 400,
                     message: "all input data must be filled",
                   }
-  
+
+  /products/{idproduct}:
+    get:
+      tags:
+        - products
+      description: Get product by idproduct
+      parameters:
+        - in: path
+          name: idproduct
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: id product
+      responses:
+        '200':
+          description: Success Response get a product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseproductSuccess'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+
+
+                    message: "success",
+                    data: {
+                      id: 1,
+                      name: "Batu",
+                      price: 150000,
+                      quantity: 3,
+                      description: "terlaris pada tahun 2010",
+                      image_url : "https://storage.googleapis.com/bucket-project-2/download1.jpg",
+                      sold: 0,
+                      created_at: "2022-06-26T18:35:01.231Z",
+                      user: {
+                        id: 2,
+                        user_name: "uti"
+                      }
+                    }
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    message: "Bad Request",
+                  }
     put:
       tags:
-        - News
-      description: Update News by id News
+        - products
+      description: Update product by id product
       security:
         - JWTAuth: []     
       parameters:
         - in: path
-          name: id_news
+          name: idproduct
           required: true
           schema:
             type: number
             example: 1
-          description: ID News
+          description: product_id
       requestBody:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/requestUpdateNews'
+              $ref: '#/components/schemas/requestUpdateproduct'
             examples:
               userData1:
                 description: "Example data  user 1"
                 value: {
-                        content: "Hello guys... hari ini pada liburan kemana?? cek this out",
-                        created_at: "2022-07-26T18:35:01.231Z",
-                        image_url: "image/im.jpg",
+                        Name: "Batu Ajaib",
+                        price: 150000,
+                        quantity: 3,
+                        description: "Novel karya J.K. Rowling terlaris pada tahun 2010",
+                        image_url: "https://storage.googleapis.com/download2.jpg",
                         user_id: 2,
+                        sold: 0
                         }
       responses:
         '200':
@@ -463,9 +511,8 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 200,
                     message: "success update data",
-                    code : 200,
-                    data : null
                   }
         '400':
           description: Failed Response
@@ -475,36 +522,24 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 400,
                     message: "Bad Request",
-                    code : 400,
-                    data : null
                   }
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: response success 1
-                  value: {
-                    message: "Internal server error",
-                    code : 500,
-                    data : null
-                  }
+  
     delete:
       tags:
-        - News
-      description: Delete news by id news
+        - products
+      description: Delete product by id product
       security:
         - JWTAuth: []
       parameters:
         - in: path
-          name: idnews
+          name: idproduct
           required: true
           schema:
             type: number
             example: 1
-          description: id_news
+          description: id_product
       responses:
         '200':
           description: Success Response
@@ -514,8 +549,8 @@ paths:
                 responseData1:
                   description: response success 1
                   value: {
+                    code: 200,
                     message: "success delete data",
-                    code : 200
                   }
         '400':
           description: Failed Response
@@ -525,181 +560,342 @@ paths:
                 responseData1:
                   description: response failed 1
                   value: {
+                    code: 400,
                     message: "Bad Request",
-                    code : 400,
-                    data : null
                   }
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: Internal server error
-                  value: {
-                    message: "Internal server error",
-                    code : 500,
-                    data : null
-                  }
-  
-  /Comment:
+                
+  /products/users:
     get:
       tags:
-        - Comment
-      description: Get All Comment
+        - products
+      description: Get products by id from token
+      security:
+        - JWTAuth: []
       responses:
         '200':
-          description: Success Response get all Comment
+          description: Success Response get a product
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/responseCommentSuccess'
+                $ref: '#/components/schemas/responseproductSuccess'
               examples:
                 responseData1:
                   description: response success 1
                   value: {
+
+                    code: 200,
                     message: "success",
-                    code : 200,
-                    data: [{
+                    data: {
                       id: 1,
-                      content: "Hello guys... hari ini pada liburan kemana?? cek this out",
-                      created_at: "2022-07-26T18:35:01.231Z",
+                      name: "Batu",
+                      price: 150000,
+                      quantity: 3,
+                      description: "terlaris pada tahun 2010",
+                      image_url : "https://storage.googleapis.com/bucket-project-2/download1.jpg",
+                      sold: 0,
+                      created_at: "2022-06-26T18:35:01.231Z",
                       user: {
                         id: 2,
-                        user_name: "AntonyStarr"
-                      }
-                    },
-                    {
-                      id: 4,
-                      content: "Here we go...",
-                      created_at: "2022-07-26T18:35:01.231Z",
-                      user: {
-                        id: 3,
-                        user_name: "Bucher"
+                        user_name: "uti"
                       }
                     }
-                    ]
                   }
         '400':
-          description: Cannot get all Comment
+          description: Failed Response
           content:
             application/json:
               examples:
                 responseData1:
                   description: response failed 1
                   value: {
-                    "message" : "failed to get all data",
-                    code : 400,
-                    data : null
+                    code: 400,
+                    message: "Bad Request",
                   }
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              examples:
-                responseData1:
-                  description: response failed 1
-                  value: {
-                    "message" : "Internal Server Error",
-                    code : 500,
-                    data : null
-                  }
+                  
+  /carts/{idproduct}:
     post:
       tags:
-        - Comment
-      description: Add new Comment
+        - Shoppingcarts
+      description: Add to cart
       security:
         - JWTAuth: []
+      parameters:
+        - in: path
+          name: idproduct
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: id_product
       requestBody:
-            content:
-              multipart/form-data:
-                schema:
-                  $ref: '#/components/schemas/requestComment'
-                examples:
-                  newsData1:
-                    description: "Example Comment"
-                    value: {
-                        content: "Kepantai seru...",
-                        created_at: "2022-07-26T18:35:01.231Z",
-                        image_url: "image/im.jpg",
-                        user_id: 2,
-                        }
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/requestShoppingCart'
+            examples:
+              shoppingCart1:
+                description: "Example cart input"
+                value: {
+                    quantity: 1,
+                    price: 150000,
+                }
       responses:
         '200':
           description: Success Response
           content:
-            multipart/form-data:
+            application/json:
               examples:
                 responseData1:
                   description: response success 1
                   value: {
-                    message: "success to insert news",
-                    code : 200,
+                    id_cart: 1,
+                    code: 200,
+                    message: "success insert to cart",
                   }
         '400':
           description: Failed Response
           content:
-            multipart/form-data:
+            application/json:
               examples:
                 responseData1:
                   description: response failed 1
                   value: {
-                    message: "all input data must be filled",
-                    data : null
+                    code: 400,
+                    message: "failed insert to cart",
                   }
-        '500':
+  /orders:
+    put:
+      tags:
+        - Shoppingcarts
+      description: Update status cart(to pay cart)
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code: 200,
+                    message: "success updated status",
+                  }
+        '400':
           description: Failed Response
           content:
-            multipart/form-data:
+            application/json:
               examples:
                 responseData1:
                   description: response failed 1
                   value: {
-                    message: "Internal Server Error",
-                    data : null
+                    code: 400,
+                    message: "failed to update status",
                   }
+  /orders/{iduser}:
+    get:
+      tags:
+        - Shoppingcarts
+      description: Get checkout
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: iduser
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: user_id
+      responses:
+        '200':
+          description: Success Response 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCartSuccess'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+
+                    code: 200,
+                    message: "success",
+                    data: {
+                      id: 1,
+                      total_quantity: 1,
+                      total_price: 150000,
+                      status: "Done",
+                      user: {
+                        id: 1,
+                        user_name: "uti"
+                      }
+                    }
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    message: "Bad Request",
+                  }
+  /orderdetails/{idcart}:
+    get:
+      tags:
+        - Shoppingcartdetails
+      description: get cart details
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: idcart
+          required: true
+          schema:
+            type: number
+            example: 2
+          description: cart_id
+      responses:
+        '200':
+          description: Success Response get a product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCartSuccess'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+
+                    code: 200,
+                    message: "success",
+                    data: {
+                      id: 1,
+                      quantity_buy_product: 1,
+                      total_price_product: 150000,
+                      created_at: "2022-06-30T16:33:58.079Z",
+                      product: {
+                        id: 2,
+                        title: "Batu",
+                        price: 150000,
+                      },
+                      shopping_cart: {
+                        id: 2,
+                        user_id: 2,
+                      }
+                    }
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    message: "Bad Request",
+                  }
+
     delete:
       tags:
-        - Comment
-      description: Delete Comment
+        - Shoppingcartdetails
+      description: delete cart(cancel)
       security:
         - JWTAuth: []
-      requestBody:
-            content:
-              multipart/form-data:
-                schema:
-                  $ref: '#/components/schemas/requestComment'
-                examples:
-                  newsData1:
-                    description: "Example Comment"
-                    value: {
-                        content: "Kepantai seru...",
-                        created_at: "2022-07-26T18:35:01.231Z",
-                        image_url: "image/im.jpg",
-                        user_id: 2,
-                        }
+      parameters:
+        - in: path
+          name: idcart
+          required: true
+          schema:
+            type: number
+            example: 2
+          description: cart_id
       responses:
         '200':
           description: Success Response
           content:
-            multipart/form-data:
+            application/json:
               examples:
                 responseData1:
                   description: response success 1
                   value: {
-                    message: "success to insert news",
+                    code: 200,
+                    message: "success to delete shopping cart details",
                   }
         '400':
           description: Failed Response
           content:
-            multipart/form-data:
+            application/json:
               examples:
                 responseData1:
                   description: response failed 1
                   value: {
-                    message: "all input data must be filled",
+                    code: 400,
+                    message: "failed to delete shopping cart details",
                   }
-  
+  /orderdetails/{idcart}{idproduct}:
+    put:
+      tags:
+        - Shoppingcartdetails
+      description: update cart
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: idcart
+          required: true
+          schema:
+            type: number
+            example: 1
+          description: id_cart
+        - in: path
+          name: idproduct
+          required: true
+          schema:
+            type: number
+            example: 10
+          description: id_product
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/requestShoppingCartDetail'
+            examples:
+              shoppingCart1:
+                description: "Example update orderdetails"
+                value: {
+                    quantity_buy_product: 1,
+                    total_price_product: 150000,
+                }
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code : 200,
+                    message: "success update data shopping cart details",
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code : 400,
+                    message: "failed update data shopping cart details",
+                  }
+
 components:
   securitySchemes:
     JWTAuth:
@@ -733,6 +929,9 @@ components:
     requestRegistrasi:
       type: object
       properties:
+        "full_name":
+          type: string
+          minLength: 1
         "username":
           type: string
           minLength: 1
@@ -742,24 +941,16 @@ components:
         "email":
           type: string
           minLength: 1
-        "fullname":
+        "address":
+          type: string
+          minLength: 1
+        "phone":
           type: string
           minLength: 1
         "file":
           type: string
           minLength: 1
-          
-    responseRegistrasiSuccess:
-      type: object
-      properties: {
-        
-        "message": {
-          type: string
-        },
-        "data":{
-          type: object
-        }
-      }
+
 
     responseGetUserSuccess:
       type: object
@@ -785,32 +976,44 @@ components:
         "email":
           type: string
           minLength: 1
-        "fullname":
+        "address":
+          type: string
+          minLength: 1
+        "phone":
           type: string
           minLength: 1
         "file":
           type: string
           minLength: 1
 
-    requestNews:
+    requestproduct:
       type: object
       properties:
-        "content":
+        "name":
           type: string
           minLength: 1
-        "file_images":
+        "price":
+          type: number
+          minLength: 1
+        "quantity":
+          type: number
+          minLength: 1
+        "description":
           type: string
           minLength: 1
-        "file_attachment":
+        "file":
           type: string
-          minLength: 1     
+          minLength: 1
         "user_id":
           type: number
           minLength: 1
+        "sold":
+          type: number
 
-    responseAllNewsuccess:
+    responseAllproductSuccess:
       type: object
       properties: {
+
         "message": {
           type: string
           },
@@ -819,7 +1022,7 @@ components:
           }
       }
 
-    responseNewsuccess:
+    responseproductSuccess:
       type: object
       properties: {
       
@@ -831,38 +1034,51 @@ components:
             }
       }
 
-    requestUpdateNews:
+    requestUpdateproduct:
       type: object
       properties:
-        "content":
+        "name":
           type: string
           minLength: 1
-        "file_images":
+        "price":
+          type: number
+          minLength: 1
+        "quantity":
+          type: number
+          minLength: 1
+        "description":
           type: string
           minLength: 1
-        "file_attachment":
+        "file":
           type: string
-          minLength: 1     
+          minLength: 1
         "user_id":
           type: number
           minLength: 1
         "sold":
           type: number
 
-    requestComment:
+    requestShoppingCart:
       type: object
       properties:
-        "content":
+        "quantity":
           type: number
           minLength: 1
-        "user_id":
-          type: number
-          minLength: 1
-        "news_id":
+        "price":
           type: number
           minLength: 1
 
-    responseCommentSuccess:
+    requestShoppingCartDetail:
+      type: object
+      properties:
+        "quantity_buy_product":
+          type: number
+          minLength: 1
+        "total_price_product":
+          type: number
+          minLength: 1
+
+    responseCartSuccess:
       type: object
       properties: {
       
