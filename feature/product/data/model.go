@@ -8,11 +8,11 @@ import (
 
 type Product struct {
 	gorm.Model
-	Name        string  `json:"name" form:"name" validate:"required"`
-	Price       float64 `json:"price" form:"price" validate:"required"`
-	Stock       int     `json:"stock" form:"stock" validate:"required"`
-	Description string  `json:"description" form:"description"`
-	Images      string  `json:"images"`
+	Name        string `json:"name" form:"name" validate:"required"`
+	Price       int    `json:"price" form:"price" validate:"required"`
+	Stock       int    `json:"stock" form:"stock" validate:"required"`
+	Description string `json:"description" form:"description"`
+	Images      string `json:"images"`
 }
 
 func (p *Product) ToDomain() domain.Product {

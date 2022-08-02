@@ -16,7 +16,7 @@ type ProductInsertRequest struct {
 func (pi *ProductInsertRequest) ToDomain() domain.Product {
 	return domain.Product{
 		Name:        pi.Name,
-		Price:       pi.Price,
+		Price:       int(pi.Price),
 		Stock:       int(pi.Stock),
 		Description: pi.Description,
 		Images:      pi.Images,

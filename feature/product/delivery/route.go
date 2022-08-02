@@ -1,9 +1,6 @@
 package delivery
 
 import (
-
-	// "socialmedia-app/feature/Product/delivery/middlewares"
-
 	"commerce-app/config"
 	"commerce-app/domain"
 	"commerce-app/feature/common"
@@ -22,5 +19,5 @@ func RouteBook(e *echo.Echo, bc domain.ProductHandler) {
 	e.PUT("/product/:id", bc.UpdateProduct(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.DELETE("/product/:id", bc.DeleteProduct(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.GET("/product", bc.GetAllProduct())
-	e.GET("/product/:id", bc.GetProductID())
+	// e.GET("/product/:id", bc.GetProductID())
 }

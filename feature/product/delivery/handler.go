@@ -85,7 +85,7 @@ func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
 		if tmp.Stock != 0 {
 			qry["stock"] = tmp.Stock
 		}
-		data, err := ph.productUsecase.UpdateProduct(cnv, tmp.ToDomain())
+		data, err := ph.productUsecase.UpProduct(cnv, tmp.ToDomain())
 
 		if err != nil {
 			log.Println("Cannot update data", err)
@@ -113,7 +113,7 @@ func (ph *productHandler) DeleteProduct() echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
 		}
 
-		data, err := ph.productUsecase.DeleteProduct(cnv)
+		data, err := ph.productUsecase.DelProduct(cnv)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, "cannot delete user")
 		}
@@ -130,8 +130,7 @@ func (ph *productHandler) DeleteProduct() echo.HandlerFunc {
 
 func (ph *productHandler) GetAllProduct() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		data, err := ph.productUsecase.GetAll()
-
+		data, err := ph.productUsecase.GetAllP()
 		if err != nil {
 			log.Println("Cannot get data", err)
 			return c.JSON(http.StatusBadRequest, "error read input")
@@ -150,19 +149,19 @@ func (ph *productHandler) GetAllProduct() echo.HandlerFunc {
 	}
 }
 
-func (ph *productHandler) GetProductID() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		idNews := c.Param("id")
-		id, _ := strconv.Atoi(idNews)
-		data, err := ph.productUsecase.GetProduct(id)
+// func (ph *productHandler) GetProductID() echo.HandlerFunc {
+// 	return func(c echo.Context) error {
+// 		idNews := c.Param("id")
+// 		id, _ := strconv.Atoi(idNews)
+// 		data, err := ph.productUsecase..GetProduct(id)
 
-		if err != nil {
-			log.Println("Cannot get data", err)
-			return c.JSON(http.StatusBadRequest, "cannot read input")
-		}
-		return c.JSON(http.StatusOK, map[string]interface{}{
-			"message": "success get product",
-			"users":   data,
-		})
-	}
-}
+// 		if err != nil {
+// 			log.Println("Cannot get data", err)
+// 			return c.JSON(http.StatusBadRequest, "cannot read input")
+// 		}
+// 		return c.JSON(http.StatusOK, map[string]interface{}{
+// 			"message": "success get product",
+// 			"users":   data,
+// 		})
+// 	}
+// }

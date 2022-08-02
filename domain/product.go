@@ -9,7 +9,7 @@ import (
 type Product struct {
 	ID          int
 	Name        string
-	Price       float64
+	Price       int
 	Stock       int
 	Description string
 	Images      string
@@ -22,15 +22,15 @@ type ProductHandler interface {
 	UpdateProduct() echo.HandlerFunc
 	DeleteProduct() echo.HandlerFunc
 	GetAllProduct() echo.HandlerFunc
-	GetProductID() echo.HandlerFunc
+	// GetProductID() echo.HandlerFunc
 }
 
 type ProductUseCase interface {
 	AddProduct(useProduct Product) (Product, error)
 	UpProduct(IDProduct int, updateData Product) (Product, error)
 	DelProduct(IDProduct int) (bool, error)
-	GetAllN() ([]Product, error)
-	GetSpecificProduct(productID int) ([]Product, error)
+	GetAllP() ([]Product, error)
+	// GetSpecificProduct(productID int) ([]Product, error)
 }
 
 type ProductData interface {
@@ -38,5 +38,5 @@ type ProductData interface {
 	Update(IDProduct int, updatedProduct Product) Product
 	Delete(IDProduct int) bool
 	GetAll() []Product
-	GetProductID(productID int) []Product
+	// GetProductID(productID int) []Product
 }
