@@ -17,7 +17,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/ubuntu/production
+            cd /home/ubuntu/production/commerce-app
             git pull origin main
             docker stop appContainer
             docker rm appContainer
