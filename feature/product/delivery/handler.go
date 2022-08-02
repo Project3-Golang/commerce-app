@@ -19,35 +19,28 @@ func New(pu domain.ProductUseCase) domain.ProductHandler {
 	}
 }
 
-// func (ph *productHandler) InsertProduct() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		var tmp ProductInsertRequest
-// 		err := c.Bind(&tmp)
+func (ph *productHandler) InsertProduct() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var tmp ProductInsertRequest
+		err := c.Bind(&tmp)
 
-// 		if err != nil {
-// 			log.Println("Cannot parse data", err)
-// 			c.JSON(http.StatusBadRequest, "error read input")
-// 		}
+		if err != nil {
+			log.Println("Cannot parse data", err)
+			c.JSON(http.StatusBadRequest, "error read input")
+		}
 
-// 		fmt.Println(tmp)
+		data, err := ph.productUsecase.AddProduct(tmp.ToDomain())
+		if err != nil {
+			log.Println("Cannot proces data", err)
+			c.JSON(http.StatusInternalServerError, err)
+		}
 
-// 		var userid = common.ExtractData(c)
-// 		data, err := ph.productUsecase.AddProduct(common.ExtractData(c), tmp.ToDomain())
-
-// 		if err != nil {
-// 			log.Println("Cannot proces data", err)
-// 			c.JSON(http.StatusInternalServerError, err)
-// 		}
-
-// 		fmt.Println(userid)
-
-// 		return c.JSON(http.StatusCreated, map[string]interface{}{
-// 			"message": "success create data",
-// 			"data":    FromDomain(data),
-// 		})
-
-// 	}
-// }
+		return c.JSON(http.StatusCreated, map[string]interface{}{
+			"message": "success create data",
+			"data":    data,
+		})
+	}
+}
 
 func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
 	return func(c echo.Context) error {

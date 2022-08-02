@@ -19,15 +19,15 @@ func New(ud domain.ProductData, v *validator.Validate) domain.ProductUseCase {
 	}
 }
 
-// func (pd *productUseCase) AddProduct(newProduct[]) (domain.Product, error) {
+func (pd *productUseCase) AddProduct(newProduct domain.Product) (domain.Product, error) {
 
-// 	res := pd.productData.Insert(newProduct)
+	res := pd.productData.Insert(newProduct)
 
-// 	if res.ID == 0 {
-// 		return domain.Product{}, errors.New("error insert news")
-// 	}
-// 	return res, nil
-// }
+	if res.ID == 0 {
+		return domain.Product{}, errors.New("error insert data")
+	}
+	return res, nil
+}
 
 func (pd *productUseCase) GetSpecificProduct(productID int) ([]domain.Product, error) {
 	res := pd.productData.GetProductID(productID)

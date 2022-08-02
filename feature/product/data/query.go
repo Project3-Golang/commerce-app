@@ -18,8 +18,8 @@ func New(db *gorm.DB) domain.ProductData {
 	}
 }
 
-func (pd *productData) Insert(dataProduct domain.Product) domain.Product {
-	cnv := ToLocal(dataProduct)
+func (pd *productData) Insert(newProduct domain.Product) domain.Product {
+	cnv := ToLocal(newProduct)
 	err := pd.db.Create(&cnv)
 	fmt.Println("error", err.Error)
 	if err.Error != nil {
