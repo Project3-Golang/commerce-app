@@ -48,11 +48,6 @@ func (ud *userUseCase) AddUser(newUser domain.User) (domain.User, error) {
 	return inserted, nil
 }
 func (ud *userUseCase) UpdateUser(id int, updateProfile domain.User) (domain.User, error) {
-	// if updateProfile.Email == "" || updateProfile.Password == "" || updateProfile.UserName == "" || updateProfile.FullName == "" || updateProfile.Photo == "" {
-	// 	return -1, errors.New("all input data must be filled")
-	// }
-	// row, err = ud.userData.Update(id, updateProfile)
-	// return row, err
 
 	if id == -1 {
 		return domain.User{}, errors.New("invalid user")
