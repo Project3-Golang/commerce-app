@@ -17,20 +17,20 @@ type Product struct {
 	UpdatedAt   time.Time
 }
 
-type ProductHandler interface {
-	InsertProduct() echo.HandlerFunc
-	UpdateProduct() echo.HandlerFunc
-	DeleteProduct() echo.HandlerFunc
-	GetAllProduct() echo.HandlerFunc
-	// GetProductID() echo.HandlerFunc
-}
-
 type ProductUseCase interface {
-	AddProduct(useProduct Product) (Product, error)
+	// AddProduct([]Product) (Product, error)
 	UpProduct(IDProduct int, updateData Product) (Product, error)
 	DelProduct(IDProduct int) (bool, error)
 	GetAllP() ([]Product, error)
 	// GetSpecificProduct(productID int) ([]Product, error)
+}
+
+type ProductHandler interface {
+	// InsertProduct() echo.HandlerFunc
+	UpdateProduct() echo.HandlerFunc
+	DeleteProduct() echo.HandlerFunc
+	GetAllProduct() echo.HandlerFunc
+	// GetProductID() echo.HandlerFunc
 }
 
 type ProductData interface {

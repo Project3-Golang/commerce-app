@@ -2,9 +2,7 @@ package usecase
 
 import (
 	"commerce-app/domain"
-	"commerce-app/feature/product/data"
 	"errors"
-	"log"
 
 	validator "github.com/go-playground/validator/v10"
 )
@@ -20,6 +18,17 @@ func New(ud domain.ProductData, v *validator.Validate) domain.ProductUseCase {
 		validate:    v,
 	}
 }
+
+// func (pd *productUseCase) AddProduct(newProduct[]) (domain.Product, error) {
+
+// 	res := pd.productData.Insert(newProduct)
+
+// 	if res.ID == 0 {
+// 		return domain.Product{}, errors.New("error insert news")
+// 	}
+// 	return res, nil
+// }
+
 func (pd *productUseCase) GetAllP() ([]domain.Product, error) {
 	res := pd.productData.GetAll()
 
@@ -28,24 +37,6 @@ func (pd *productUseCase) GetAllP() ([]domain.Product, error) {
 	}
 
 	return res, nil
-}
-
-func (pd *productUseCase) AddProduct(newProduct domain.Product) (domain.Product, error) {
-	var cnv = data.ToLocal(newProduct)
-	err := pd.validate.Struct(cnv)
-	if err != nil {
-		log.Println("Validation error : ", err.Error())
-		return domain.Product{}, err
-	}
-
-	if err != nil {
-		log.Println("error from usecase", err.Error())
-		return domain.Product{}, err
-	}
-	if newProduct.ID == 0 {
-		return domain.Product{}, errors.New("cannot insert data")
-	}
-	return domain.Product, err
 }
 
 func (pd *productUseCase) UpProduct(IDProduct int, updateData domain.Product) (domain.Product, error) {

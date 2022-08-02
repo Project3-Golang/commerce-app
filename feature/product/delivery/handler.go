@@ -2,8 +2,6 @@ package delivery
 
 import (
 	"commerce-app/domain"
-	"commerce-app/feature/common"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -21,35 +19,35 @@ func New(pu domain.ProductUseCase) domain.ProductHandler {
 	}
 }
 
-func (ph *productHandler) InsertProduct() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		var tmp ProductInsertRequest
-		err := c.Bind(&tmp)
+// func (ph *productHandler) InsertProduct() echo.HandlerFunc {
+// 	return func(c echo.Context) error {
+// 		var tmp ProductInsertRequest
+// 		err := c.Bind(&tmp)
 
-		if err != nil {
-			log.Println("Cannot parse data", err)
-			c.JSON(http.StatusBadRequest, "error read input")
-		}
+// 		if err != nil {
+// 			log.Println("Cannot parse data", err)
+// 			c.JSON(http.StatusBadRequest, "error read input")
+// 		}
 
-		fmt.Println(tmp)
+// 		fmt.Println(tmp)
 
-		var userid = common.ExtractData(c)
-		data, err := ph.productUsecase.AddProduct(common.ExtractData(c), tmp.ToDomain())
+// 		var userid = common.ExtractData(c)
+// 		data, err := ph.productUsecase.AddProduct(common.ExtractData(c), tmp.ToDomain())
 
-		if err != nil {
-			log.Println("Cannot proces data", err)
-			c.JSON(http.StatusInternalServerError, err)
-		}
+// 		if err != nil {
+// 			log.Println("Cannot proces data", err)
+// 			c.JSON(http.StatusInternalServerError, err)
+// 		}
 
-		fmt.Println(userid)
+// 		fmt.Println(userid)
 
-		return c.JSON(http.StatusCreated, map[string]interface{}{
-			"message": "success create data",
-			"data":    FromDomain(data),
-		})
+// 		return c.JSON(http.StatusCreated, map[string]interface{}{
+// 			"message": "success create data",
+// 			"data":    FromDomain(data),
+// 		})
 
-	}
-}
+// 	}
+// }
 
 func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -118,12 +116,12 @@ func (ph *productHandler) DeleteProduct() echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, "cannot delete user")
 		}
 
-		if data == 0 {
+		if !data {
 			return c.JSON(http.StatusInternalServerError, "cannot delete")
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
-			"message": "success delete news",
+			"message": "success delete product",
 		})
 	}
 }
@@ -143,7 +141,7 @@ func (ph *productHandler) GetAllProduct() echo.HandlerFunc {
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
-			"message": "success get all news",
+			"message": "success get all Product",
 			"users":   data,
 		})
 	}

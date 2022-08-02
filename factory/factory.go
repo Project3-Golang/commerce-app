@@ -21,7 +21,7 @@ func Initfactory(e *echo.Echo, db *gorm.DB) {
 	userDelivery.New(e, useCase)
 
 	productData := pd.New(db)
-	productCase := pu.New(productData)
+	productCase := pu.New(productData, validator)
 	productHandler := productDelivery.New(productCase)
 	productDelivery.RouteBook(e, productHandler)
 }
