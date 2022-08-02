@@ -9,8 +9,8 @@ type ProductInsertRequest struct {
 	Name        string  `json:"name" form:"name"`
 	Price       float64 `json:"price" form:"price"`
 	Stock       int32   `json:"stock" form:"stock"`
-	Description string  `json:"desription" form:"desription"`
-	Images      string  `json:"images_url" form:"images_url"`
+	Description string  `json:"description" form:"description"`
+	Images      string  `json:"images" form:"images"`
 }
 
 func (pi *ProductInsertRequest) ToDomain() domain.Product {

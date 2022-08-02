@@ -22,7 +22,8 @@ type ProductUseCase interface {
 	UpProduct(IDProduct int, updateData Product) (Product, error)
 	DelProduct(IDProduct int) (bool, error)
 	GetAllP() ([]Product, error)
-	// GetSpecificProduct(productID int) ([]Product, error)
+	GetSpecificProduct(productID int) ([]Product, error)
+	// GetSpecificNews(newsID int) ([]News, error)
 }
 
 type ProductHandler interface {
@@ -30,7 +31,8 @@ type ProductHandler interface {
 	UpdateProduct() echo.HandlerFunc
 	DeleteProduct() echo.HandlerFunc
 	GetAllProduct() echo.HandlerFunc
-	// GetProductID() echo.HandlerFunc
+	GetProductID() echo.HandlerFunc
+	// GetNewsID() echo.HandlerFunc
 }
 
 type ProductData interface {
@@ -38,5 +40,6 @@ type ProductData interface {
 	Update(IDProduct int, updatedProduct Product) Product
 	Delete(IDProduct int) bool
 	GetAll() []Product
-	// GetProductID(productID int) []Product
+	GetProductID(productID int) []Product
+	// GetNewsID(newsID int) []News
 }

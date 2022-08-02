@@ -29,6 +29,15 @@ func New(ud domain.ProductData, v *validator.Validate) domain.ProductUseCase {
 // 	return res, nil
 // }
 
+func (pd *productUseCase) GetSpecificProduct(productID int) ([]domain.Product, error) {
+	res := pd.productData.GetProductID(productID)
+	if productID == -1 {
+		return nil, errors.New("error get Product")
+	}
+
+	return res, nil
+}
+
 func (pd *productUseCase) GetAllP() ([]domain.Product, error) {
 	res := pd.productData.GetAll()
 

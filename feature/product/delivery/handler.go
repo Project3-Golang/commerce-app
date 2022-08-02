@@ -91,13 +91,13 @@ func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
-			"message":     "success update data",
-			"id":          data.ID,
-			"name":        data.Name,
-			"price":       data.Price,
-			"stock":       data.Stock,
-			"description": data.Description,
-			"images":      data.Images,
+			"ID":          data.ID,
+			"Name":        data.Name,
+			"Price":       data.Price,
+			"Stock":       data.Stock,
+			"Description": data.Description,
+			"Images":      data.Images,
+			"message ":    "Update Data Sukses",
 		})
 	}
 }
@@ -142,24 +142,24 @@ func (ph *productHandler) GetAllProduct() echo.HandlerFunc {
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success get all Product",
-			"users":   data,
+			"data":    data,
 		})
 	}
 }
 
-// func (ph *productHandler) GetProductID() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		idNews := c.Param("id")
-// 		id, _ := strconv.Atoi(idNews)
-// 		data, err := ph.productUsecase..GetProduct(id)
+func (ph *productHandler) GetProductID() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		idProduct := c.Param("id")
+		id, _ := strconv.Atoi(idProduct)
+		data, err := ph.productUsecase.GetSpecificProduct(id)
 
-// 		if err != nil {
-// 			log.Println("Cannot get data", err)
-// 			return c.JSON(http.StatusBadRequest, "cannot read input")
-// 		}
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"message": "success get product",
-// 			"users":   data,
-// 		})
-// 	}
-// }
+		if err != nil {
+			log.Println("Cannot get data", err)
+			return c.JSON(http.StatusBadRequest, "cannot read input")
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success get data",
+			"data":    data,
+		})
+	}
+}
