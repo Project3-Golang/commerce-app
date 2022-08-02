@@ -12,7 +12,7 @@ type Product struct {
 	Price       float64 `json:"price" form:"price" validate:"required"`
 	Stock       int     `json:"stock" form:"stock" validate:"required"`
 	Description string  `json:"description" form:"description"`
-	Images      string  `json:"image_url"`
+	Images      string  `json:"images"`
 }
 
 func (p *Product) ToDomain() domain.Product {
@@ -37,7 +37,7 @@ func ParseToArr(arr []Product) []domain.Product {
 	return res
 }
 
-func FromModel(data domain.Product) Product {
+func ToLocal(data domain.Product) Product {
 	var res Product
 	res.Name = data.Name
 	res.Price = data.Price

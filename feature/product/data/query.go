@@ -19,7 +19,7 @@ func New(db *gorm.DB) domain.ProductData {
 }
 
 func (pd *productData) Insert(dataProduct domain.Product) domain.Product {
-	cnv := FromModel(dataProduct)
+	cnv := ToLocal(dataProduct)
 	err := pd.db.Create(&cnv)
 	fmt.Println("error", err.Error)
 	if err.Error != nil {
@@ -29,7 +29,7 @@ func (pd *productData) Insert(dataProduct domain.Product) domain.Product {
 }
 
 func (pd *productData) Update(productID int, updatedProduct domain.Product) domain.Product {
-	cnv := FromModel(updatedProduct)
+	cnv := ToLocal(updatedProduct)
 	err := pd.db.Model(cnv).Where("ID = ?", productID).Updates(updatedProduct)
 	if err.Error != nil {
 		log.Println("Cannot update data", err.Error.Error())
