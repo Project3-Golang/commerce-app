@@ -782,7 +782,7 @@ components:
           type: object
         }
       }
-
+    
     requestRegistrasi:
       type: object
       properties:
