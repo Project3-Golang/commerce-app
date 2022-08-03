@@ -12,6 +12,10 @@ import (
 	pd "commerce-app/feature/product/data"
 	productDelivery "commerce-app/feature/product/delivery"
 	pu "commerce-app/feature/product/usecase"
+
+	cd "commerce-app/feature/cart/data"
+	cartDelivery "commerce-app/feature/cart/delivery"
+	cu "commerce-app/feature/cart/usecase"
 )
 
 func Initfactory(e *echo.Echo, db *gorm.DB) {
@@ -24,4 +28,9 @@ func Initfactory(e *echo.Echo, db *gorm.DB) {
 	productCase := pu.New(productData, validator)
 	productHandler := productDelivery.New(productCase)
 	productDelivery.RouteProduct(e, productHandler)
+
+	cartData := cd.New(db)
+	cartCase := cu.New(cartData, validator)
+	cartHandler := cartDelivery.New(cartCase)
+	cartDelivery.RouteCart(e, cartHandler)
 }
