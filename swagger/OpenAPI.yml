@@ -33,14 +33,12 @@ paths:
                 value: {
                   email: "thanos@gmail.com",
                   password: "than321",
-                  role: "admin"
                 }
               userData2:
                 description: "Data  user 2"
                 value: {
-                  email: "badman@gmail.com",
-                  password: "Cahyo12",
-                  role: "user"
+                  email: "notbatman@gmail.com",
+                  password: "wayne1234",
                 }
       responses:
         '200':
@@ -83,7 +81,8 @@ paths:
                   description: response failed to login to account
                   value: {
                     code: 400,
-                    message: "email or password incorrect"
+                    message: "email or password incorrect",
+                    data : null
                   }
         '500':
           description: Failed Response
@@ -94,7 +93,8 @@ paths:
                   description: response failed to login to account
                   value: {
                     code: 500,
-                    message: "Internal server error"
+                    message: "Internal server error",
+                    data : null
                   }
         
   /users:
@@ -206,9 +206,8 @@ paths:
                       "email": "thanos@gmail.com",
                       "address": "Jln. Baru No.4, Jakarta - Indonesia",
                       "phone": "08123247689",
-                      "role" : "admin",
                       "created_at": "2022-06-27T05:56:50.248Z",
-                      "photo_url": "https://storage.googleapis.com/bucket-project-2/profil1.jpg"
+                      "photo_url": "https://storage.googleapis.com/bucket/profil1.jpg"
                     }
                   }
         '400':
@@ -443,7 +442,7 @@ paths:
                       price: 150000,
                       stock: 300,
                       description: "terlaris pada tahun ini",
-                      image_url : "https://storage.googleapis.com/bucket-project-2/download1.jpg",
+                      image_url : "https://storage.googleapis.com/bucket/download1.jpg",
                       sold: 0,
                       created_at: "2022-06-26T18:35:01.231Z",
                         }
@@ -469,8 +468,21 @@ paths:
                   value: {
                     code: 400,
                     message: "all input data must be filled",
+                    data: null
                   }
-
+        '500':
+          description: Cannot input product
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
+                  }
+                  
   /products/{idproduct}:
     get:
       tags:
@@ -502,7 +514,7 @@ paths:
                       price: 150000,
                       quantity: 3,
                       description: "terlaris pada tahun 2010",
-                      image_url : "https://storage.googleapis.com/bucket-project-2/download1.jpg",
+                      image_url : "https://storage.googleapis.com/bucket/download1.jpg",
                       sold: 0,
                       created_at: "2022-06-26T18:35:01.231Z",
                       user: {
@@ -521,6 +533,19 @@ paths:
                   value: {
                     code: 400,
                     message: "Bad Request",
+                    data : null
+                  }
+        '500':
+          description: Cannot get all product
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
                   }
     put:
       tags:
@@ -571,10 +596,23 @@ paths:
             application/json:
               examples:
                 responseData:
-                  description: response success 
+                  description: response failed
                   value: {
                     code: 400,
                     message: "Bad Request",
+                    data : null
+                  }
+        '500':
+          description: Cannot get all product
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
                   }
   
     delete:
@@ -613,8 +651,20 @@ paths:
                   value: {
                     code: 400,
                     message: "Bad Request",
+                    data : null
                   }
-                
+        '500':
+          description: Cannot get all product
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
+                  }
   /carts/{idproduct}:
     post:
       tags:
@@ -665,6 +715,19 @@ paths:
                   value: {
                     code: 400,
                     message: "failed insert to cart",
+                    data : null
+                  }
+        '500':
+          description: Cannot get all product
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
                   }
   /orders:
     put:
@@ -695,6 +758,19 @@ paths:
                   value: {
                     code: 400,
                     message: "failed to update status",
+                    data : null
+                  }
+        '500':
+          description: response 
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
                   }
   /orders/{iduser}:
     get:
@@ -722,7 +798,6 @@ paths:
                 responseData:
                   description: response success 
                   value: {
-
                     code: 200,
                     message: "success",
                     data: {
@@ -737,7 +812,7 @@ paths:
                     }
                   }
         '400':
-          description: Failed Response
+          description: bad request response
           content:
             application/json:
               examples:
@@ -746,8 +821,20 @@ paths:
                   value: {
                     code: 400,
                     message: "Bad Request",
+                    data : null
                   }
-
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              examples:
+                responseData:
+                  description: response failed 
+                  value: {
+                    "code" : 500,
+                    "message" : "Internal server error",
+                    "data" : null
+                  }
 components:
   securitySchemes:
     JWTAuth:
@@ -774,7 +861,6 @@ components:
     responseLoginSuccess:
       type: object
       properties: {
-        
         "message": {
           type: string
         },
@@ -898,7 +984,6 @@ components:
     responseAllproductSuccess:
       type: object
       properties: {
-
         "message": {
           type: string
           },
@@ -964,7 +1049,6 @@ components:
     responseCartSuccess:
       type: object
       properties: {
-      
         "message": {
           type: string
           },
