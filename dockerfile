@@ -9,6 +9,6 @@ WORKDIR /app
 # copy all files to /app
 COPY . .
 
-RUN go build -o ecommerse
+RUN go build -o g4-api
 
-CMD [ "./ecommerse" ]
+CMD [ "./g4-api" ]

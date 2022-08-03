@@ -32,7 +32,7 @@ func GetConfig() *AppConfig {
 
 func initConfig() *AppConfig {
 	var defaultConfig AppConfig
-	
+
 	SECRET = os.Getenv("SECRET")
 	cnv, err := strconv.Atoi(os.Getenv("SERVERPORT"))
 	if err != nil {
@@ -40,11 +40,11 @@ func initConfig() *AppConfig {
 		return nil
 	}
 	SERVERPORT = int16(cnv)
-	defaultConfig.Name = os.Getenv("Name")
-	defaultConfig.Username = os.Getenv("Username")
-	defaultConfig.Password = os.Getenv("Password")
-	defaultConfig.Address = os.Getenv("Address")
-	cnv, err = strconv.Atoi(os.Getenv("Port"))
+	defaultConfig.Name = os.Getenv("DB_NAME")
+	defaultConfig.Username = os.Getenv("DB_USERNAME")
+	defaultConfig.Password = os.Getenv("DB_PASSWORD")
+	defaultConfig.Address = os.Getenv("DB_HOST")
+	cnv, err = strconv.Atoi(os.Getenv("DB_PORT"))
 	if err != nil {
 		log.Fatal("Cannot parse DB Port variable")
 		return nil
