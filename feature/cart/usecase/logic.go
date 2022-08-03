@@ -3,59 +3,23 @@ package usecase
 import (
 	"commerce-app/domain"
 	"errors"
-	"fmt"
+
+	validator "github.com/go-playground/validator/v10"
 )
 
 type cartUseCase struct {
 	cartData domain.CartData
+	validate *validator.Validate
 }
 
-func New(model domain.CartData) domain.CartUseCase {
+func New(ud domain.CartData, v *validator.Validate) domain.CartUseCase {
 	return &cartUseCase{
-		cartData: model,
+		cartData: ud,
+		validate: v,
 	}
 }
-
-func (cc *cartUseCase) AddCart(IDUser int, newCart domain.Cart) (domain.Cart, error) {
-	if IDUser == -1 {
-		return domain.Cart{}, errors.New("invalid user")
-	}
-
-	newCart.UserID = IDUser
-	fmt.Println("news", newCart)
-	res := cc.cartData.Insert(newCart)
-	if res.ID == 0 {
-		return domain.Cart{}, errors.New("error add to cart")
-	}
-	return res, nil
-}
-
-func (cc *cartUseCase) UpCart(IDCart int, updateData domain.Cart) (domain.Cart, error) {
-	if IDCart == -1 {
-		return domain.Cart{}, errors.New("invalid cart")
-	}
-
-	// updateData.UserID = IDNews
-	res := cc.cartData.Update(IDCart, updateData)
-	if res.ID == 0 {
-		return domain.Cart{}, errors.New("error update cart")
-	}
-
-	return res, nil
-}
-
-func (cc *cartUseCase) DelCart(IDCart int) (bool, error) {
-	res := cc.cartData.Delete(IDCart)
-
-	if !res {
-		return false, errors.New("failed delete")
-	}
-
-	return true, nil
-}
-
-func (cc *cartUseCase) GetAllC() ([]domain.Cart, error) {
-	res := cc.cartData.GetAll()
+func (pu *cartUseCase) GetAllC() ([]domain.Cart, error) {
+	res := pu.cartData.GetAll()
 
 	if len(res) == 0 {
 		return nil, errors.New("no data found")
@@ -64,11 +28,44 @@ func (cc *cartUseCase) GetAllC() ([]domain.Cart, error) {
 	return res, nil
 }
 
-func (cc *cartUseCase) GetSpecificCart(cartID int) ([]domain.Cart, error) {
-	res := cc.cartData.GetCartID(cartID)
-	if cartID == -1 {
-		return nil, errors.New("error update cart")
-	}
+// func (pd *productUseCase) AddProduct(newProduct domain.Product) (domain.Product, error) {
 
-	return res, nil
-}
+// 	res := pd.productData.Insert(newProduct)
+
+// 	if res.ID == 0 {
+// 		return domain.Product{}, errors.New("error insert data")
+// 	}
+// 	return res, nil
+// }
+
+// func (pd *productUseCase) GetSpecificProduct(productID int) ([]domain.Product, error) {
+// 	res := pd.productData.GetProductID(productID)
+// 	if productID == -1 {
+// 		return nil, errors.New("error get Product")
+// 	}
+
+// 	return res, nil
+// }
+
+// func (pd *productUseCase) UpProduct(IDProduct int, updateData domain.Product) (domain.Product, error) {
+
+// 	if IDProduct == -1 {
+// 		return domain.Product{}, errors.New("invalid product")
+// 	}
+// 	result := pd.productData.Update(IDProduct, updateData)
+
+// 	if result.ID == 0 {
+// 		return domain.Product{}, errors.New("error update product")
+// 	}
+// 	return result, nil
+// }
+
+// func (pd *productUseCase) DelProduct(IDProduct int) (bool, error) {
+// 	res := pd.productData.Delete(IDProduct)
+
+// 	if !res {
+// 		return false, errors.New("failed delete")
+// 	}
+
+// 	return true, nil
+// }

@@ -2,7 +2,6 @@ package data
 
 import (
 	"commerce-app/domain"
-	"fmt"
 	"log"
 
 	"gorm.io/gorm"
@@ -18,40 +17,6 @@ func New(db *gorm.DB) domain.CartData {
 	}
 }
 
-func (cd *cartData) Insert(newCart domain.Cart) domain.Cart {
-	cnv := ToLocal(newCart)
-	err := cd.db.Create(&cnv)
-	fmt.Println("error", err.Error)
-	if err.Error != nil {
-		return domain.Cart{}
-	}
-	return cnv.ToDomain()
-}
-
-func (cd *cartData) Update(cartID int, updatedCart domain.Cart) domain.Cart {
-	cnv := ToLocal(updatedCart)
-	err := cd.db.Model(cnv).Where("ID = ?", cartID).Updates(updatedCart)
-	if err.Error != nil {
-		log.Println("Cannot update data", err.Error.Error())
-		return domain.Cart{}
-	}
-	cnv.ID = uint(cartID)
-	return cnv.ToDomain()
-}
-
-func (cd *cartData) Delete(cartID int) bool {
-	err := cd.db.Where("ID = ?", cartID).Delete(&Cart{})
-	if err.Error != nil {
-		log.Println("Cannot delete data", err.Error.Error())
-		return false
-	}
-	if err.RowsAffected < 1 {
-		log.Println("No data deleted", err.Error.Error())
-		return false
-	}
-	return true
-}
-
 func (cd *cartData) GetAll() []domain.Cart {
 	var data []Cart
 	err := cd.db.Find(&data)
@@ -64,13 +29,47 @@ func (cd *cartData) GetAll() []domain.Cart {
 	return ParseToArr(data)
 }
 
-func (cd *cartData) GetCartID(cartID int) []domain.Cart {
-	var data []Cart
-	err := cd.db.Where("ID = ?", cartID).First(&data)
+// func (cd *cartData) Insert(newCart domain.Cart) domain.Cart {
+// 	cnv := ToLocal(newCart)
+// 	err := cd.db.Create(&cnv)
+// 	fmt.Println("error", err.Error)
+// 	if err.Error != nil {
+// 		return domain.Cart{}
+// 	}
+// 	return cnv.ToDomain()
+// }
 
-	if err.Error != nil {
-		log.Println("problem data", err.Error.Error())
-		return nil
-	}
-	return ParseToArr(data)
-}
+// func (pd *productData) Update(productID int, updatedProduct domain.Product) domain.Product {
+// 	cnv := ToLocal(updatedProduct)
+// 	err := pd.db.Model(cnv).Where("ID = ?", productID).Updates(updatedProduct)
+// 	if err.Error != nil {
+// 		log.Println("Cannot update data", err.Error.Error())
+// 		return domain.Product{}
+// 	}
+// 	cnv.ID = uint(productID)
+// 	return cnv.ToDomain()
+// }
+
+// func (pd *productData) Delete(productID int) bool {
+// 	err := pd.db.Where("ID = ?", productID).Delete(&Product{})
+// 	if err.Error != nil {
+// 		log.Println("Cannot delete data", err.Error.Error())
+// 		return false
+// 	}
+// 	if err.RowsAffected < 1 {
+// 		log.Println("No data deleted", err.Error.Error())
+// 		return false
+// 	}
+// 	return true
+// }
+
+// func (pd *productData) GetProductID(productID int) []domain.Product {
+// 	var data []Product
+// 	err := pd.db.Where("ID = ?", productID).First(&data)
+
+// 	if err.Error != nil {
+// 		log.Println("problem data", err.Error.Error())
+// 		return nil
+// 	}
+// 	return ParseToArr(data)
+// }

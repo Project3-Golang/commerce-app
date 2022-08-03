@@ -19,24 +19,24 @@ type Product struct {
 
 type ProductUseCase interface {
 	AddProduct(newProduct Product) (Product, error)
+	GetAllP() ([]Product, error)
 	UpProduct(IDProduct int, updateData Product) (Product, error)
 	DelProduct(IDProduct int) (bool, error)
-	GetAllP() ([]Product, error)
 	GetSpecificProduct(productID int) ([]Product, error)
 }
 
 type ProductHandler interface {
 	InsertProduct() echo.HandlerFunc
+	GetAllProduct() echo.HandlerFunc
 	UpdateProduct() echo.HandlerFunc
 	DeleteProduct() echo.HandlerFunc
-	GetAllProduct() echo.HandlerFunc
 	GetProductID() echo.HandlerFunc
 }
 
 type ProductData interface {
 	Insert(insertProduct Product) Product
+	GetAll() []Product
 	Update(IDProduct int, updatedProduct Product) Product
 	Delete(IDProduct int) bool
-	GetAll() []Product
 	GetProductID(productID int) []Product
 }

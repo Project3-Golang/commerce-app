@@ -13,9 +13,9 @@ type CartInsertRequest struct {
 
 func (ci *CartInsertRequest) ToDomain() domain.Cart {
 	return domain.Cart{
-		Quantity: ci.Quantity,
-		// ProductID: int(ci.ProductID),
-		// UserID:    int(ci.UserID),
+		Quantity:  ci.Quantity,
+		ProductID: int(ci.ProductID),
+		UserID:    int(ci.UserID),
 		CreatedAt: time.Time{},
 		UpdatedAt: time.Time{},
 	}
