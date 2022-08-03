@@ -118,6 +118,7 @@ paths:
                   password: "than321",
                   alamat: "Jln. Baru No.4, Jakarta - Indonesia",
                   phone: "8128188181818",
+                  role: "admin",
                   file: "profile1.jpg"
                 }
               userData2:
@@ -129,6 +130,7 @@ paths:
                   password: "wayne1234",
                   alamat: "Jln. Lama No.5, Jakarta - Indonesia",
                   phone: "8128188181818",
+                  role: "user",
                   file: "profile2.jpg"
                 }
       responses:
@@ -866,7 +868,7 @@ components:
           type: object
         }
       }
-
+    
     requestRegistrasi:
       type: object
       properties:
