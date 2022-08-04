@@ -4,6 +4,7 @@ import (
 	"commerce-app/domain"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -41,117 +42,110 @@ func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
 	}
 }
 
-// func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
+func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
+	return func(c echo.Context) error {
 
-// 		qry := map[string]interface{}{}
-// 		cnv, err := strconv.Atoi(c.Param("id"))
-// 		if err != nil {
-// 			log.Println("Cannot convert to int", err.Error())
-// 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
-// 		}
+		qry := map[string]interface{}{}
+		cnv, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			log.Println("Cannot convert to int", err.Error())
+			return c.JSON(http.StatusInternalServerError, "cannot convert id")
+		}
 
-// 		var tmp ProductInsertRequest
-// 		res := c.Bind(&tmp)
+		var tmp OrderInsertRequest
+		res := c.Bind(&tmp)
 
-// 		if res != nil {
-// 			log.Println(res, "Cannot parse data")
-// 			return c.JSON(http.StatusInternalServerError, "error read update")
-// 		}
+		if res != nil {
+			log.Println(res, "Cannot parse data")
+			return c.JSON(http.StatusInternalServerError, "error read update")
+		}
 
-// 		if tmp.Name != "" {
-// 			qry["name"] = tmp.Name
-// 		}
-// 		if tmp.Images != "" {
-// 			qry["images"] = tmp.Images
-// 		}
-// 		if tmp.Description != "" {
-// 			qry["description"] = tmp.Description
-// 		}
-// 		if tmp.Price != 0 {
-// 			qry["price"] = tmp.Price
-// 		}
+		if tmp.Payment != "" {
+			qry["payment"] = tmp.Payment
+		}
+		if tmp.Status != 0 {
+			qry["status"] = tmp.Status
+		}
 
-// 		if tmp.Stock != 0 {
-// 			qry["stock"] = tmp.Stock
-// 		}
-// 		data, err := ph.productUsecase.UpProduct(cnv, tmp.ToDomain())
+		if tmp.Cart != 0 {
+			qry["cart"] = tmp.Cart
+		}
 
-// 		if err != nil {
-// 			log.Println("Cannot update data", err)
-// 			c.JSON(http.StatusInternalServerError, "cannot update")
-// 		}
+		data, err := oh.orderUsecase.UpOrder(cnv, tmp.ToDomain())
 
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"ID":          data.ID,
-// 			"Name":        data.Name,
-// 			"Price":       data.Price,
-// 			"Stock":       data.Stock,
-// 			"Description": data.Description,
-// 			"Images":      data.Images,
-// 			"message ":    "Update Data Sukses",
-// 		})
-// 	}
-// }
+		if err != nil {
+			log.Println("Cannot update data", err)
+			c.JSON(http.StatusInternalServerError, "cannot update")
+		}
 
-// func (ph *productHandler) DeleteProduct() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"ID":       data.ID,
+			"Cart":     data.Cart,
+			"Payment":  data.Payment,
+			"Status":   data.Status,
+			"Total":    data.Total,
+			"message ": "Order Update",
+		})
+	}
+}
 
-// 		cnv, err := strconv.Atoi(c.Param("id"))
-// 		if err != nil {
-// 			log.Println("Cannot convert to int", err.Error())
-// 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
-// 		}
+func (oh *orderHandler) DeleteOrder() echo.HandlerFunc {
+	return func(c echo.Context) error {
 
-// 		data, err := ph.productUsecase.DelProduct(cnv)
-// 		if err != nil {
-// 			return c.JSON(http.StatusInternalServerError, "cannot delete user")
-// 		}
+		cnv, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			log.Println("Cannot convert to int", err.Error())
+			return c.JSON(http.StatusInternalServerError, "cannot convert id")
+		}
 
-// 		if !data {
-// 			return c.JSON(http.StatusInternalServerError, "cannot delete")
-// 		}
+		data, err := oh.orderUsecase.DelOrder(cnv)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, "cannot delete user")
+		}
 
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"message": "success delete product",
-// 		})
-// 	}
-// }
+		if !data {
+			return c.JSON(http.StatusInternalServerError, "cannot delete")
+		}
 
-// func (ph *productHandler) GetAllProduct() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		data, err := ph.productUsecase.GetAllP()
-// 		if err != nil {
-// 			log.Println("Cannot get data", err)
-// 			return c.JSON(http.StatusBadRequest, "error read input")
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success delete order",
+		})
+	}
+}
 
-// 		}
+func (oh *orderHandler) GetAllOrder() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		data, err := oh.orderUsecase.GetAllO()
+		if err != nil {
+			log.Println("Cannot get data", err)
+			return c.JSON(http.StatusBadRequest, "error read input")
 
-// 		if data == nil {
-// 			log.Println("Terdapat error saat mengambil data")
-// 			return c.JSON(http.StatusInternalServerError, "Problem from database")
-// 		}
+		}
 
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"message": "success get all Product",
-// 			"data":    data,
-// 		})
-// 	}
-// }
+		if data == nil {
+			log.Println("Terdapat error saat mengambil data")
+			return c.JSON(http.StatusInternalServerError, "Problem from database")
+		}
 
-// func (ph *productHandler) GetProductID() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		idProduct := c.Param("id")
-// 		id, _ := strconv.Atoi(idProduct)
-// 		data, err := ph.productUsecase.GetSpecificProduct(id)
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success get all Order",
+			"data":    data,
+		})
+	}
+}
 
-// 		if err != nil {
-// 			log.Println("Cannot get data", err)
-// 			return c.JSON(http.StatusBadRequest, "cannot read input")
-// 		}
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"message": "success get data",
-// 			"data":    data,
-// 		})
-// 	}
-// }
+func (oh *orderHandler) GetOrderID() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		idOrder := c.Param("id")
+		id, _ := strconv.Atoi(idOrder)
+		data, err := oh.orderUsecase.GetSpecificOrder(id)
+		if err != nil {
+			log.Println("Cannot get data", err)
+			return c.JSON(http.StatusBadRequest, "cannot read input")
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success get data",
+			"data":    data,
+		})
+	}
+}
