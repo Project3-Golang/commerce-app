@@ -8,8 +8,9 @@ import (
 
 type Order struct {
 	ID        int
-	User      string
-	Cart      int
+	CartID    int
+	ProductID int
+	UserID    int
 	Status    int
 	Payment   string
 	Total     string
@@ -18,7 +19,7 @@ type Order struct {
 }
 
 type OrderUseCase interface {
-	AddOrder(newOrder Order) (Order, error)
+	AddOrder(IDUser int, useOrder Order) (Order, error)
 	GetAllO() ([]Order, error)
 	UpOrder(IDOrder int, updateData Order) (Order, error)
 	DelOrder(IDOrder int) (bool, error)
@@ -28,7 +29,7 @@ type OrderUseCase interface {
 type OrderHandler interface {
 	InsertOrder() echo.HandlerFunc
 	GetAllOrder() echo.HandlerFunc
-	UpdateOrder() echo.HandlerFunc
+	// UpdateOrder() echo.HandlerFunc
 	DeleteOrder() echo.HandlerFunc
 	GetOrderID() echo.HandlerFunc
 }

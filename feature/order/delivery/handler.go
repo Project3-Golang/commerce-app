@@ -2,6 +2,8 @@ package delivery
 
 import (
 	"commerce-app/domain"
+	"commerce-app/feature/common"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -29,65 +31,96 @@ func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
 			c.JSON(http.StatusBadRequest, "error read input")
 		}
 
-		data, err := oh.orderUsecase.AddOrder(tmp.ToDomain())
+		fmt.Println(tmp)
+
+		var userid = common.ExtractData(c)
+		data, err := oh.orderUsecase.AddOrder(common.ExtractData(c), tmp.ToDomain())
+
 		if err != nil {
 			log.Println("Cannot proces data", err)
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
+		fmt.Println(userid)
+
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message": "success create data",
-			"data":    data,
+			"data":    FromDomain(data),
 		})
+
 	}
 }
 
-func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
-	return func(c echo.Context) error {
+// func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
+// 	return func(c echo.Context) error {
+// 		var tmp OrderInsertRequest
+// 		err := c.Bind(&tmp)
 
-		qry := map[string]interface{}{}
-		cnv, err := strconv.Atoi(c.Param("id"))
-		if err != nil {
-			log.Println("Cannot convert to int", err.Error())
-			return c.JSON(http.StatusInternalServerError, "cannot convert id")
-		}
+// 		if err != nil {
+// 			log.Println("Cannot parse data", err)
+// 			c.JSON(http.StatusBadRequest, "error read input")
+// 		}
 
-		var tmp OrderInsertRequest
-		res := c.Bind(&tmp)
+// 		data, err := oh.orderUsecase.AddOrder(tmp.ToDomain())
+// 		if err != nil {
+// 			log.Println("Cannot proces data", err)
+// 			c.JSON(http.StatusInternalServerError, err)
+// 		}
 
-		if res != nil {
-			log.Println(res, "Cannot parse data")
-			return c.JSON(http.StatusInternalServerError, "error read update")
-		}
+// 		return c.JSON(http.StatusCreated, map[string]interface{}{
+// 			"message": "success create data",
+// 			"data":    data,
+// 		})
+// 	}
+// }
 
-		if tmp.Payment != "" {
-			qry["payment"] = tmp.Payment
-		}
-		if tmp.Status != 0 {
-			qry["status"] = tmp.Status
-		}
+// func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
+// 	return func(c echo.Context) error {
 
-		if tmp.Cart != 0 {
-			qry["cart"] = tmp.Cart
-		}
+// 		qry := map[string]interface{}{}
+// 		cnv, err := strconv.Atoi(c.Param("id"))
+// 		if err != nil {
+// 			log.Println("Cannot convert to int", err.Error())
+// 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
+// 		}
 
-		data, err := oh.orderUsecase.UpOrder(cnv, tmp.ToDomain())
+// 		var tmp OrderInsertRequest
+// 		res := c.Bind(&tmp)
 
-		if err != nil {
-			log.Println("Cannot update data", err)
-			c.JSON(http.StatusInternalServerError, "cannot update")
-		}
+// 		if res != nil {
+// 			log.Println(res, "Cannot parse data")
+// 			return c.JSON(http.StatusInternalServerError, "error read update")
+// 		}
 
-		return c.JSON(http.StatusOK, map[string]interface{}{
-			"ID":       data.ID,
-			"Cart":     data.Cart,
-			"Payment":  data.Payment,
-			"Status":   data.Status,
-			"Total":    data.Total,
-			"message ": "Order Update",
-		})
-	}
-}
+// 		if tmp.Payment != "" {
+// 			qry["payment"] = tmp.Payment
+// 		}
+// 		if tmp.Status != 0 {
+// 			qry["status"] = tmp.Status
+// 		}
+
+// 		if tmp.Cart != 0 {
+// 			qry["cart"] = tmp.Cart
+// 		}
+
+// 		data, err := oh.orderUsecase.UpOrder(cnv, tmp.ToDomain())
+
+// 		if err != nil {
+// 			log.Println("Cannot update data", err)
+// 			c.JSON(http.StatusInternalServerError, "cannot update")
+// 		}
+
+// 		return c.JSON(http.StatusOK, map[string]interface{}{
+// 			"ID":       data.ID,
+// 			"Cart":     data.CartID,
+// 			"Product":  data.ProductID,
+// 			"Payment":  data.Payment,
+// 			"Status":   data.Status,
+// 			"Total":    data.Total,
+// 			"message ": "Order Update",
+// 		})
+// 	}
+// }
 
 func (oh *orderHandler) DeleteOrder() echo.HandlerFunc {
 	return func(c echo.Context) error {

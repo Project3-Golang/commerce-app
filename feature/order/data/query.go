@@ -28,6 +28,16 @@ func (od *orderData) Insert(newOrder domain.Order) domain.Order {
 	return cnv.ToDomain()
 }
 
+// func (od *orderData) Insert(newOrder domain.Order) domain.Order {
+// 	cnv := ToLocal(newOrder)
+// 	err := od.db.Create(&cnv)
+// 	fmt.Println("error", err.Error)
+// 	if err.Error != nil {
+// 		return domain.Order{}
+// 	}
+// 	return cnv.ToDomain()
+// }
+
 func (od *orderData) Update(orderID int, updatedOrder domain.Order) domain.Order {
 	cnv := ToLocal(updatedOrder)
 	err := od.db.Model(cnv).Where("ID = ?", orderID).Updates(updatedOrder)

@@ -16,7 +16,7 @@ func RouteOrder(e *echo.Echo, oh domain.OrderHandler) {
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 	}))
 	e.POST("/order", oh.InsertOrder())
-	e.PUT("/order/:id", oh.UpdateOrder(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
+	// e.PUT("/order/:id", oh.UpdateOrder(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.DELETE("/order/:id", oh.DeleteOrder(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.GET("/order", oh.GetAllOrder())
 	e.GET("/order/:id", oh.GetOrderID())
