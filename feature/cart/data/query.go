@@ -28,17 +28,6 @@ func (cd *cartData) Insert(newCart domain.Cart) domain.Cart {
 	return cnv.ToDomain()
 }
 
-// func (cd *cartData) Update(cartID int, updatedCart domain.Cart) domain.Cart {
-// 	cnv := ToLocal(updatedCart)
-// 	err := cd.db.Model(cnv).Where("ID = ?", cartID).Updates(updatedCart)
-// 	if err.Error != nil {
-// 		log.Println("Cannot update data", err.Error.Error())
-// 		return domain.Cart{}
-// 	}
-// 	cnv.ID = uint(cartID)
-// 	return cnv.ToDomain()
-// }
-
 func (cd *cartData) Update(cartID int, updatedCart domain.Cart) domain.Cart {
 	cnv := ToLocal(updatedCart)
 	err := cd.db.Model(cnv).Where("ID = ?", cartID).Updates(updatedCart)

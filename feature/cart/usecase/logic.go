@@ -35,20 +35,6 @@ func (cc *cartUseCase) AddCart(IDUser int, newCart domain.Cart) (domain.Cart, er
 	return res, nil
 }
 
-// func (cc *cartUseCase) UpCart(IDCart int, updateData domain.Cart) (domain.Cart, error) {
-// 	if IDCart == -1 {
-// 		return domain.Cart{}, errors.New("invalid cart")
-// 	}
-
-// 	// updateData.UserID = IDNews
-// 	res := cc.cartData.Update(IDCart, updateData)
-// 	if res.ID == 0 {
-// 		return domain.Cart{}, errors.New("error update cart")
-// 	}
-
-// 	return res, nil
-// }
-
 func (cc *cartUseCase) UpCart(IDCart int, updateData domain.Cart) (domain.Cart, error) {
 	if IDCart == -1 {
 		return domain.Cart{}, errors.New("invalid cart")

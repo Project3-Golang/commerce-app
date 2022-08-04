@@ -96,43 +96,6 @@ func (ch *cartHandler) UpdateCart() echo.HandlerFunc {
 	}
 }
 
-// func (ch *cartHandler) UpdateCart() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-
-// 		qry := map[string]interface{}{}
-// 		cnv, err := strconv.Atoi(c.Param("id"))
-// 		if err != nil {
-// 			log.Println("Cannot convert to int", err.Error())
-// 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
-// 		}
-
-// 		var tmp CartInsertRequest
-// 		res := c.Bind(&tmp)
-
-// 		if res != nil {
-// 			log.Println(res, "Cannot parse data")
-// 			return c.JSON(http.StatusInternalServerError, "error read update")
-// 		}
-
-// 		if tmp.Quantity != 0 {
-// 			qry["quantity"] = tmp.Quantity
-// 		}
-
-// 		data, err := ch.cartUsecase.UpCart(cnv, tmp.ToDomain())
-
-// 		if err != nil {
-// 			log.Println("Cannot update data", err)
-// 			c.JSON(http.StatusInternalServerError, "cannot update")
-// 		}
-
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"message":  "success update data",
-// 			"ID":       data.ID,
-// 			"Quantity": data.Quantity,
-// 		})
-// 	}
-// }
-
 func (ch *cartHandler) DeleteCart() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
