@@ -3,6 +3,7 @@ package usecase
 import (
 	"commerce-app/domain"
 	"errors"
+	"fmt"
 
 	validator "github.com/go-playground/validator/v10"
 )
@@ -19,16 +20,32 @@ func New(ud domain.CartData, v *validator.Validate) domain.CartUseCase {
 	}
 }
 
-// func (cc *cartUseCase) AddCart(IDUser int, newCart domain.Cart) (domain.Cart, error) {
-// 	if IDUser == -1 {
-// 		return domain.Cart{}, errors.New("invalid user")
+func (cc *cartUseCase) AddCart(IDUser int, newCart domain.Cart) (domain.Cart, error) {
+	if IDUser == -1 {
+		return domain.Cart{}, errors.New("invalid user")
+	}
+
+	newCart.UserID = IDUser
+	fmt.Println("cart", newCart)
+	res := cc.cartData.Insert(newCart)
+
+	if res.ID == 0 {
+		return domain.Cart{}, errors.New("error insert")
+	}
+	return res, nil
+}
+
+// func (cc *cartUseCase) UpCart(IDCart int, updateData domain.Cart) (domain.Cart, error) {
+// 	if IDCart == -1 {
+// 		return domain.Cart{}, errors.New("invalid cart")
 // 	}
 
-// 	newCart.UserID = IDUser
-// 	res := cc.cartData.Insert(newCart)
+// 	// updateData.UserID = IDNews
+// 	res := cc.cartData.Update(IDCart, updateData)
 // 	if res.ID == 0 {
-// 		return domain.Cart{}, errors.New("error add to cart")
+// 		return domain.Cart{}, errors.New("error update cart")
 // 	}
+
 // 	return res, nil
 // }
 
@@ -37,10 +54,9 @@ func (cc *cartUseCase) UpCart(IDCart int, updateData domain.Cart) (domain.Cart, 
 		return domain.Cart{}, errors.New("invalid cart")
 	}
 
-	// updateData.UserID = IDNews
 	res := cc.cartData.Update(IDCart, updateData)
 	if res.ID == 0 {
-		return domain.Cart{}, errors.New("error update cart")
+		return domain.Cart{}, errors.New("error update")
 	}
 
 	return res, nil
