@@ -10,10 +10,9 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func GenerateToken(ID int, Role string) string {
+func GenerateToken(ID int) string {
 	info := jwt.MapClaims{}
 	info["ID"] = ID
-	info["Role"] = Role
 	auth := jwt.NewWithClaims(jwt.SigningMethodHS256, info)
 	token, err := auth.SignedString([]byte(config.SECRET))
 	if err != nil {
@@ -23,7 +22,7 @@ func GenerateToken(ID int, Role string) string {
 	return token
 }
 
-func ExtractData(c echo.Context) (int, string) {
+func ExtractData(c echo.Context) int {
 	head := c.Request().Header
 	token := strings.Split(head.Get("Authorization"), " ")
 
@@ -33,26 +32,9 @@ func ExtractData(c echo.Context) (int, string) {
 	if res.Valid {
 		resClaim := res.Claims.(jwt.MapClaims)
 		parseID := resClaim["ID"].(float64)
-		parseRole := resClaim["Role"].(string)
-		return int(parseID), parseRole
+		return int(parseID)
 	}
-	return -1, ""
-}
-
-func ExtractData_Admin(c echo.Context) (int, string) {
-	head := c.Request().Header
-	token := strings.Split(head.Get("Authorization"), " ")
-
-	res, _ := jwt.Parse(token[len(token)-1], func(t *jwt.Token) (interface{}, error) {
-		return []byte(config.SECRET), nil
-	})
-	if res.Valid {
-		resClaim := res.Claims.(jwt.MapClaims)
-		parseID := resClaim["ID"].(float64)
-		parseRole := resClaim["Role"].(string)
-		return int(parseID), parseRole
-	}
-	return -1, ""
+	return -1
 }
 
 func UseJWT(secret []byte) middleware.JWTConfig {
