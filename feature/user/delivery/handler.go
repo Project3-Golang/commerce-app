@@ -27,7 +27,7 @@ func New(e *echo.Echo, us domain.UserUseCase) {
 	}))
 	e.POST("/users", handler.InsertUser())
 	e.POST("/login", handler.LogUser())
-	e.GET("/profile", handler.GetProfile(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
+	e.GET("/users", handler.GetProfile(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.DELETE("/users", handler.DeleteUser(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.PUT("/users", handler.UpdateUser(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 }
