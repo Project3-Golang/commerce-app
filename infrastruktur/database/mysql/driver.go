@@ -2,6 +2,8 @@ package mysql
 
 import (
 	"commerce-app/config"
+	cartData "commerce-app/feature/cart/data"
+	orderData "commerce-app/feature/order/data"
 	productData "commerce-app/feature/product/data"
 	userData "commerce-app/feature/user/data"
 	"fmt"
@@ -22,5 +24,5 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 }
 
 func MigrateData(db *gorm.DB) {
-	db.AutoMigrate(userData.User{}, productData.Product{})
+	db.AutoMigrate(userData.User{}, productData.Product{}, orderData.Order{}, cartData.Cart{})
 }
