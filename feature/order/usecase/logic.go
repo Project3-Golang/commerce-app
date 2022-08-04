@@ -33,16 +33,6 @@ func (pu *orderUseCase) AddOrder(IDUser int, newOrder domain.Order) (domain.Orde
 	return res, nil
 }
 
-// func (pu *orderUseCase) AddOrder(newOrder domain.Order) (domain.Order, error) {
-
-// 	res := pu.orderData.Insert(newOrder)
-
-// 	if res.ID == 0 {
-// 		return domain.Order{}, errors.New("error insert data")
-// 	}
-// 	return res, nil
-// }
-
 func (pu *orderUseCase) GetSpecificOrder(orderID int) ([]domain.Order, error) {
 	res := pu.orderData.GetOrderID(orderID)
 	if orderID == -1 {
