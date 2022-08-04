@@ -6,17 +6,19 @@ import (
 )
 
 type OrderInsertRequest struct {
-	User    string `json:"user" form:"user"`
-	Cart    int    `json:"cart" form:"cart"`
-	Status  int    `json:"status" form:"status"`
-	Payment string `json:"payment" form:"payment"`
-	Total   string `json:"total" form:"total"`
+	UserID    uint   `json:"user_id" form:"user_id"`
+	ProductID uint   `json:"product_id" form:"product_id"`
+	CartID    uint   `json:"cart_id" form:"cart_id"`
+	Status    int    `json:"status" form:"status"`
+	Payment   string `json:"payment" form:"payment"`
+	Total     string `json:"total" form:"total"`
 }
 
 func (oi *OrderInsertRequest) ToDomain() domain.Order {
 	return domain.Order{
-		User:      oi.User,
-		Cart:      oi.Cart,
+		CartID:    int(oi.CartID),
+		ProductID: int(oi.ProductID),
+		UserID:    int(oi.UserID),
 		Status:    oi.Status,
 		Payment:   oi.Payment,
 		Total:     oi.Total,
