@@ -2,6 +2,8 @@ package delivery
 
 import (
 	"commerce-app/domain"
+	"commerce-app/feature/common"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -18,30 +20,6 @@ func New(pu domain.OrderUseCase) domain.OrderHandler {
 		orderUsecase: pu,
 	}
 }
-
-func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		var tmp OrderInsertRequest
-		err := c.Bind(&tmp)
-
-		if err != nil {
-			log.Println("Cannot parse data", err)
-			c.JSON(http.StatusBadRequest, "error read input")
-		}
-
-		data, err := oh.orderUsecase.AddOrder(tmp.ToDomain())
-		if err != nil {
-			log.Println("Cannot proces data", err)
-			c.JSON(http.StatusInternalServerError, err)
-		}
-
-		return c.JSON(http.StatusCreated, map[string]interface{}{
-			"message": "success create data",
-			"data":    data,
-		})
-	}
-}
-
 func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
@@ -60,15 +38,20 @@ func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, "error read update")
 		}
 
+		if tmp.CartID != 0 {
+			qry["cart"] = tmp.CartID
+		}
+		if tmp.UserID != 0 {
+			qry["user_id"] = tmp.UserID
+		}
+		if tmp.ProductID != 0 {
+			qry["product_id"] = tmp.ProductID
+		}
 		if tmp.Payment != "" {
 			qry["payment"] = tmp.Payment
 		}
 		if tmp.Status != 0 {
 			qry["status"] = tmp.Status
-		}
-
-		if tmp.Cart != 0 {
-			qry["cart"] = tmp.Cart
 		}
 
 		data, err := oh.orderUsecase.UpOrder(cnv, tmp.ToDomain())
@@ -79,13 +62,39 @@ func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
-			"ID":       data.ID,
-			"Cart":     data.Cart,
-			"Payment":  data.Payment,
-			"Status":   data.Status,
-			"Total":    data.Total,
-			"message ": "Order Update",
+			"message": "success Update",
+			"data":    FromDomain(data),
 		})
+	}
+}
+
+func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var tmp OrderInsertRequest
+		err := c.Bind(&tmp)
+
+		if err != nil {
+			log.Println("Cannot parse data", err)
+			c.JSON(http.StatusBadRequest, "error read input")
+		}
+
+		fmt.Println(tmp)
+
+		var userid = common.ExtractData(c)
+		data, err := oh.orderUsecase.AddOrder(common.ExtractData(c), tmp.ToDomain())
+
+		if err != nil {
+			log.Println("Cannot proces data", err)
+			c.JSON(http.StatusInternalServerError, err)
+		}
+
+		fmt.Println(userid)
+
+		return c.JSON(http.StatusCreated, map[string]interface{}{
+			"message": "success create data",
+			"data":    FromDomain(data),
+		})
+
 	}
 }
 

@@ -19,15 +19,29 @@ func New(ud domain.OrderData, v *validator.Validate) domain.OrderUseCase {
 	}
 }
 
-func (pu *orderUseCase) AddOrder(newOrder domain.Order) (domain.Order, error) {
+func (pu *orderUseCase) AddOrder(IDUser int, newOrder domain.Order) (domain.Order, error) {
+	if IDUser == -1 {
+		return domain.Order{}, errors.New("invalid user")
+	}
 
+	newOrder.UserID = IDUser
 	res := pu.orderData.Insert(newOrder)
 
 	if res.ID == 0 {
-		return domain.Order{}, errors.New("error insert data")
+		return domain.Order{}, errors.New("error insert")
 	}
 	return res, nil
 }
+
+// func (pu *orderUseCase) AddOrder(newOrder domain.Order) (domain.Order, error) {
+
+// 	res := pu.orderData.Insert(newOrder)
+
+// 	if res.ID == 0 {
+// 		return domain.Order{}, errors.New("error insert data")
+// 	}
+// 	return res, nil
+// }
 
 func (pu *orderUseCase) GetSpecificOrder(orderID int) ([]domain.Order, error) {
 	res := pu.orderData.GetOrderID(orderID)
