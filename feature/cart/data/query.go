@@ -74,3 +74,14 @@ func (cd *cartData) GetCartID(cartID int) []domain.Cart {
 	}
 	return ParseToArr(data)
 }
+
+func (cd *cartData) GetCartbyuser(userID int) []domain.Cart {
+	var data []Cart
+	err := cd.db.Where("user_id = ?", userID).Find(&data)
+
+	if err.Error != nil {
+		log.Println("problem data", err.Error.Error())
+		return nil
+	}
+	return ParseToArr(data)
+}

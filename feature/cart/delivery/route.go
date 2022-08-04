@@ -19,5 +19,6 @@ func RouteCart(e *echo.Echo, bc domain.CartHandler) {
 	e.PUT("/cart/:id", bc.UpdateCart(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.DELETE("/cart/:id", bc.DeleteCart(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.GET("/cart", bc.GetAllCart())
+	e.GET("/mycart", bc.GetMYCart())
 	e.GET("/cart/:id", bc.GetCartID())
 }

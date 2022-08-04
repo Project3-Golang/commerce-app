@@ -24,6 +24,7 @@ type OrderUseCase interface {
 	UpOrder(IDOrder int, updateData Order) (Order, error)
 	DelOrder(IDOrder int) (bool, error)
 	GetSpecificOrder(orderID int) ([]Order, error)
+	GetmyOrder(userID int) ([]Order, error)
 }
 
 type OrderHandler interface {
@@ -32,6 +33,7 @@ type OrderHandler interface {
 	UpdateOrder() echo.HandlerFunc
 	DeleteOrder() echo.HandlerFunc
 	GetOrderID() echo.HandlerFunc
+	GetMYOrder() echo.HandlerFunc
 }
 
 type OrderData interface {
@@ -40,4 +42,5 @@ type OrderData interface {
 	Update(IDOrder int, updatedOrder Order) Order
 	Delete(IDOrder int) bool
 	GetOrderID(orderID int) []Order
+	GetOrderbyuser(userID int) []Order
 }

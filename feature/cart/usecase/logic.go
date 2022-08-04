@@ -71,7 +71,16 @@ func (cc *cartUseCase) GetAllC() ([]domain.Cart, error) {
 func (cc *cartUseCase) GetSpecificCart(cartID int) ([]domain.Cart, error) {
 	res := cc.cartData.GetCartID(cartID)
 	if cartID == -1 {
-		return nil, errors.New("error update cart")
+		return nil, errors.New("error get cart")
+	}
+
+	return res, nil
+}
+
+func (cc *cartUseCase) GetmyCart(userID int) ([]domain.Cart, error) {
+	res := cc.cartData.GetCartbyuser(userID)
+	if userID == -1 {
+		return nil, errors.New("error get cart")
 	}
 
 	return res, nil
