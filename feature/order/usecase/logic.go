@@ -74,3 +74,12 @@ func (pu *orderUseCase) DelOrder(IDOrder int) (bool, error) {
 
 	return true, nil
 }
+
+func (pu *orderUseCase) GetmyOrder(userID int) ([]domain.Order, error) {
+	res := pu.orderData.GetOrderbyuser(userID)
+	if userID == -1 {
+		return nil, errors.New("error get order")
+	}
+
+	return res, nil
+}

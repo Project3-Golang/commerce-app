@@ -73,3 +73,14 @@ func (od *orderData) GetOrderID(orderID int) []domain.Order {
 	}
 	return ParseToArr(data)
 }
+
+func (od *orderData) GetOrderbyuser(userID int) []domain.Order {
+	var data []Order
+	err := od.db.Where("user_id = ?", userID).Find(&data)
+
+	if err.Error != nil {
+		log.Println("problem data", err.Error.Error())
+		return nil
+	}
+	return ParseToArr(data)
+}

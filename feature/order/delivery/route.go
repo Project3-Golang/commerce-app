@@ -20,4 +20,5 @@ func RouteOrder(e *echo.Echo, oh domain.OrderHandler) {
 	e.DELETE("/order/:id", oh.DeleteOrder(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.GET("/order", oh.GetAllOrder())
 	e.GET("/order/:id", oh.GetOrderID())
+	e.GET("/myorder", oh.GetMYOrder())
 }
