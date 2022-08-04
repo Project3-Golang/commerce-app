@@ -29,6 +29,10 @@ func (ph *productHandler) InsertProduct() echo.HandlerFunc {
 			c.JSON(http.StatusBadRequest, "error read input")
 		}
 
+		// Cekadmin, role := common.ExtractData_Admin(c)
+		// fmt.Println(Cekadmin)
+		// fmt.Println(role)
+
 		data, err := ph.productUsecase.AddProduct(tmp.ToDomain())
 		if err != nil {
 			log.Println("Cannot proces data", err)

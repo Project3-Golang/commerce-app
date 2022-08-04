@@ -31,8 +31,6 @@ func (ch *cartHandler) InsertCart() echo.HandlerFunc {
 			c.JSON(http.StatusBadRequest, "error read input")
 		}
 
-		fmt.Println(tmp)
-
 		var userid = common.ExtractData(c)
 		data, err := ch.cartUsecase.AddCart(common.ExtractData(c), tmp.ToDomain())
 

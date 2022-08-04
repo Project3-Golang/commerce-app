@@ -20,7 +20,6 @@ type UserUseCase interface {
 	GetProfile(id int) (User, error)
 	DeleteUser(id int) (row int, err error)
 	UpdateUser(id int, updateProfile User) (User, error)
-	// GetAll() ([]User, error)
 }
 
 type UserData interface {
@@ -29,5 +28,4 @@ type UserData interface {
 	GetSpecific(userID int) (User, error)
 	Delete(userID int) (row int, err error)
 	Update(userID int, updatedData User) User
-	// GetAll() ([]User, error)
 }
