@@ -16,8 +16,7 @@ type Cart struct {
 }
 
 type CartUseCase interface {
-	// AddCart(IDUser int, useCart Cart) (Cart, error)
-	// AddCart(newCart Cart) (Cart, error)
+	AddCart(IDUser int, useCart Cart) (Cart, error)
 	GetAllC() ([]Cart, error)
 	UpCart(IDCart int, updateData Cart) (Cart, error)
 	DelCart(IDCart int) (bool, error)
@@ -25,7 +24,7 @@ type CartUseCase interface {
 }
 
 type CartHandler interface {
-	// InsertCart() echo.HandlerFunc
+	InsertCart() echo.HandlerFunc
 	GetAllCart() echo.HandlerFunc
 	UpdateCart() echo.HandlerFunc
 	DeleteCart() echo.HandlerFunc
@@ -33,7 +32,7 @@ type CartHandler interface {
 }
 
 type CartData interface {
-	// Insert(insertCart Cart) Cart
+	Insert(insertCart Cart) Cart
 	GetAll() []Cart
 	Update(IDCart int, updatedCart Cart) Cart
 	Delete(IDCart int) bool

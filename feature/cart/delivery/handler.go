@@ -2,6 +2,8 @@ package delivery
 
 import (
 	"commerce-app/domain"
+	"commerce-app/feature/common"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -19,35 +21,35 @@ func New(cu domain.CartUseCase) domain.CartHandler {
 	}
 }
 
-// func (ch *cartHandler) InsertCart() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		var tmp CartInsertRequest
-// 		err := c.Bind(&tmp)
+func (ch *cartHandler) InsertCart() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var tmp CartInsertRequest
+		err := c.Bind(&tmp)
 
-// 		if err != nil {
-// 			log.Println("Cannot parse data", err)
-// 			c.JSON(http.StatusBadRequest, "error read input")
-// 		}
+		if err != nil {
+			log.Println("Cannot parse data", err)
+			c.JSON(http.StatusBadRequest, "error read input")
+		}
 
-// 		fmt.Println(tmp)
+		fmt.Println(tmp)
 
-// 		var userid = common.ExtractData(c)
-// 		data, err := ch.cartUsecase.AddCart(common.ExtractData(c), tmp.ToDomain())
+		var userid = common.ExtractData(c)
+		data, err := ch.cartUsecase.AddCart(common.ExtractData(c), tmp.ToDomain())
 
-// 		if err != nil {
-// 			log.Println("Cannot proces data", err)
-// 			c.JSON(http.StatusInternalServerError, err)
-// 		}
+		if err != nil {
+			log.Println("Cannot proces data", err)
+			c.JSON(http.StatusInternalServerError, err)
+		}
 
-// 		fmt.Println(userid)
+		fmt.Println(userid)
 
-// 		return c.JSON(http.StatusCreated, map[string]interface{}{
-// 			"message": "success create data",
-// 			"data":    FromDomain(data),
-// 		})
+		return c.JSON(http.StatusCreated, map[string]interface{}{
+			"message": "success create data",
+			"data":    FromDomain(data),
+		})
 
-// 	}
-// }
+	}
+}
 
 func (ch *cartHandler) UpdateCart() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -70,6 +72,12 @@ func (ch *cartHandler) UpdateCart() echo.HandlerFunc {
 		if tmp.Quantity != 0 {
 			qry["quantity"] = tmp.Quantity
 		}
+		if tmp.UserID != 0 {
+			qry["user_id"] = tmp.UserID
+		}
+		if tmp.ProductID != 0 {
+			qry["product_id"] = tmp.ProductID
+		}
 
 		data, err := ch.cartUsecase.UpCart(cnv, tmp.ToDomain())
 
@@ -80,8 +88,10 @@ func (ch *cartHandler) UpdateCart() echo.HandlerFunc {
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message":  "success update data",
-			"ID":       data.ID,
-			"Quantity": data.Quantity,
+			"id":       data.ID,
+			"quantity": data.Quantity,
+			"product":  data.ProductID,
+			"user":     data.UserID,
 		})
 	}
 }

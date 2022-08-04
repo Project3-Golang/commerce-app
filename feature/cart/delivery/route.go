@@ -15,7 +15,7 @@ func RouteCart(e *echo.Echo, bc domain.CartHandler) {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 	}))
-	// e.POST("/cart", bc.(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
+	e.POST("/cart", bc.InsertCart(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.PUT("/cart/:id", bc.UpdateCart(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.DELETE("/cart/:id", bc.DeleteCart(), middleware.JWTWithConfig(common.UseJWT([]byte(config.SECRET))))
 	e.GET("/cart", bc.GetAllCart())
