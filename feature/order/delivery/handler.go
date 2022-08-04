@@ -3,7 +3,6 @@ package delivery
 import (
 	"commerce-app/domain"
 	"commerce-app/feature/common"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -78,19 +77,15 @@ func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
 			c.JSON(http.StatusBadRequest, "error read input")
 		}
 
-		fmt.Println(tmp)
-
 		// var userid = common.ExtractData(c)
 		userid, _ := common.ExtractData2(c)
 
-		data, err := oh.orderUsecase.AddOrder(common.ExtractData(c), tmp.ToDomain())
+		data, err := oh.orderUsecase.AddOrder(userid, tmp.ToDomain())
 
 		if err != nil {
 			log.Println("Cannot proces data", err)
 			c.JSON(http.StatusInternalServerError, err)
 		}
-
-		fmt.Println(userid)
 
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message": "success create data",
