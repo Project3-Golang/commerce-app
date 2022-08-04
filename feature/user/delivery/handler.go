@@ -76,7 +76,7 @@ func (uh *userHandler) LogUser() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success login",
 			"token":   common.GenerateToken(data.ID),
-			"role":    common.ExtractData(data.Role),
+			"role":    data.Role,
 		})
 	}
 }
@@ -85,7 +85,7 @@ func (uh *userHandler) GetProfile() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id := common.ExtractData(c)
 
-		data, err := uh.userUsecase.GetProfile(id.ID)
+		data, err := uh.userUsecase.GetProfile(id)
 
 		if err != nil {
 			if strings.Contains(err.Error(), "not found") {
@@ -104,10 +104,10 @@ func (uh *userHandler) GetProfile() echo.HandlerFunc {
 func (uh *userHandler) DeleteUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id := common.ExtractData(c)
-		if id != id {
+		if id == 0 {
 			return c.JSON(http.StatusUnauthorized, "Unauthorized")
 		}
-		_, errDel := uh.userUsecase.DeleteUser(id.ID)
+		_, errDel := uh.userUsecase.DeleteUser(id)
 		if errDel != nil {
 			return c.JSON(http.StatusInternalServerError, "cannot delete user")
 		}

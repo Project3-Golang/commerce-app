@@ -2,10 +2,8 @@ package common
 
 import (
 	"commerce-app/config"
-	"commerce-app/domain"
 	"log"
 	"strings"
-	"time"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
@@ -15,8 +13,6 @@ import (
 func GenerateToken(ID int) string {
 	info := jwt.MapClaims{}
 	info["ID"] = ID
-	info["Role"] = "admin"
-	info["exp "] = time.Now().UnixNano()
 	auth := jwt.NewWithClaims(jwt.SigningMethodHS256, info)
 	token, err := auth.SignedString([]byte(config.SECRET))
 	if err != nil {
@@ -26,9 +22,7 @@ func GenerateToken(ID int) string {
 	return token
 }
 
-func ExtractData(c echo.Context) domain.User {
-	var userdata domain.User
-
+func ExtractData(c echo.Context) int {
 	head := c.Request().Header
 	token := strings.Split(head.Get("Authorization"), " ")
 
@@ -38,11 +32,9 @@ func ExtractData(c echo.Context) domain.User {
 	if res.Valid {
 		resClaim := res.Claims.(jwt.MapClaims)
 		parseID := resClaim["ID"].(float64)
-		userdata.ID = int(parseID)
-		userdata.Role = resClaim["Role"].(string)
-		return userdata
+		return int(parseID)
 	}
-	return domain.User{}
+	return -1
 }
 
 func ExtractData_Admin(c echo.Context) (int, string) {
