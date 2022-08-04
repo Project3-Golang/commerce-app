@@ -154,3 +154,20 @@ func (ch *cartHandler) GetCartID() echo.HandlerFunc {
 		})
 	}
 }
+
+func (ch *cartHandler) GetMYCart() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// idNews := c.Param("id")
+		userid, _ := common.ExtractData2(c)
+		data, err := ch.cartUsecase.GetmyCart(userid)
+
+		if err != nil {
+			log.Println("Cannot get data", err)
+			return c.JSON(http.StatusBadRequest, "cannot read input")
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success get my cart",
+			"data":    data,
+		})
+	}
+}
