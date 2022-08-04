@@ -20,6 +20,53 @@ func New(pu domain.OrderUseCase) domain.OrderHandler {
 		orderUsecase: pu,
 	}
 }
+func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
+	return func(c echo.Context) error {
+
+		qry := map[string]interface{}{}
+		cnv, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			log.Println("Cannot convert to int", err.Error())
+			return c.JSON(http.StatusInternalServerError, "cannot convert id")
+		}
+
+		var tmp OrderInsertRequest
+		res := c.Bind(&tmp)
+
+		if res != nil {
+			log.Println(res, "Cannot parse data")
+			return c.JSON(http.StatusInternalServerError, "error read update")
+		}
+
+		if tmp.CartID != 0 {
+			qry["cart"] = tmp.CartID
+		}
+		if tmp.UserID != 0 {
+			qry["user_id"] = tmp.UserID
+		}
+		if tmp.ProductID != 0 {
+			qry["product_id"] = tmp.ProductID
+		}
+		if tmp.Payment != "" {
+			qry["payment"] = tmp.Payment
+		}
+		if tmp.Status != 0 {
+			qry["status"] = tmp.Status
+		}
+
+		data, err := oh.orderUsecase.UpOrder(cnv, tmp.ToDomain())
+
+		if err != nil {
+			log.Println("Cannot update data", err)
+			c.JSON(http.StatusInternalServerError, "cannot update")
+		}
+
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success Update",
+			"data":    FromDomain(data),
+		})
+	}
+}
 
 func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -50,77 +97,6 @@ func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
 
 	}
 }
-
-// func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		var tmp OrderInsertRequest
-// 		err := c.Bind(&tmp)
-
-// 		if err != nil {
-// 			log.Println("Cannot parse data", err)
-// 			c.JSON(http.StatusBadRequest, "error read input")
-// 		}
-
-// 		data, err := oh.orderUsecase.AddOrder(tmp.ToDomain())
-// 		if err != nil {
-// 			log.Println("Cannot proces data", err)
-// 			c.JSON(http.StatusInternalServerError, err)
-// 		}
-
-// 		return c.JSON(http.StatusCreated, map[string]interface{}{
-// 			"message": "success create data",
-// 			"data":    data,
-// 		})
-// 	}
-// }
-
-// func (oh *orderHandler) UpdateOrder() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-
-// 		qry := map[string]interface{}{}
-// 		cnv, err := strconv.Atoi(c.Param("id"))
-// 		if err != nil {
-// 			log.Println("Cannot convert to int", err.Error())
-// 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
-// 		}
-
-// 		var tmp OrderInsertRequest
-// 		res := c.Bind(&tmp)
-
-// 		if res != nil {
-// 			log.Println(res, "Cannot parse data")
-// 			return c.JSON(http.StatusInternalServerError, "error read update")
-// 		}
-
-// 		if tmp.Payment != "" {
-// 			qry["payment"] = tmp.Payment
-// 		}
-// 		if tmp.Status != 0 {
-// 			qry["status"] = tmp.Status
-// 		}
-
-// 		if tmp.Cart != 0 {
-// 			qry["cart"] = tmp.Cart
-// 		}
-
-// 		data, err := oh.orderUsecase.UpOrder(cnv, tmp.ToDomain())
-
-// 		if err != nil {
-// 			log.Println("Cannot update data", err)
-// 			c.JSON(http.StatusInternalServerError, "cannot update")
-// 		}
-
-// 		return c.JSON(http.StatusOK, map[string]interface{}{
-// 			"ID":       data.ID,
-// 			"Cart":     data.CartID,
-// 			"Product":  data.ProductID,
-// 			"Payment":  data.Payment,
-// 			"Status":   data.Status,
-// 			"Total":    data.Total,
-// 			"message ": "Order Update",
-// 		})
-// 	}
-// }
 
 func (oh *orderHandler) DeleteOrder() echo.HandlerFunc {
 	return func(c echo.Context) error {

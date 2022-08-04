@@ -29,7 +29,7 @@ type OrderUseCase interface {
 type OrderHandler interface {
 	InsertOrder() echo.HandlerFunc
 	GetAllOrder() echo.HandlerFunc
-	// UpdateOrder() echo.HandlerFunc
+	UpdateOrder() echo.HandlerFunc
 	DeleteOrder() echo.HandlerFunc
 	GetOrderID() echo.HandlerFunc
 }
