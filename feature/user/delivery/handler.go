@@ -76,11 +76,7 @@ func (uh *userHandler) LogUser() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success login",
 			"token":   common.GenerateToken(data.ID),
-<<<<<<< HEAD
-			"role":    data.Role,
-=======
 			"role":    common.ExtractData(data.Role),
->>>>>>> 6c20a25 ( edit user handeler)
 		})
 	}
 }
