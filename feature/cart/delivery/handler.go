@@ -3,7 +3,6 @@ package delivery
 import (
 	"commerce-app/domain"
 	"commerce-app/feature/common"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -33,14 +32,12 @@ func (ch *cartHandler) InsertCart() echo.HandlerFunc {
 
 		// var userid = common.ExtractData(c)
 		userid, _ := common.ExtractData2(c)
-		data, err := ch.cartUsecase.AddCart(common.ExtractData(c), tmp.ToDomain())
+		data, err := ch.cartUsecase.AddCart(userid, tmp.ToDomain())
 
 		if err != nil {
 			log.Println("Cannot proces data", err)
 			c.JSON(http.StatusInternalServerError, err)
 		}
-
-		fmt.Println(userid)
 
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message": "success create data",
