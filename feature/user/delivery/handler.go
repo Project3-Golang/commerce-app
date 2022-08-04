@@ -52,7 +52,7 @@ func (uh *userHandler) InsertUser() echo.HandlerFunc {
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message": "success create data",
 			"data":    data,
-			"token":   common.GenerateToken(data.ID),
+			"token":   common.GenerateToken2(data.ID, data.Role),
 		})
 	}
 }
@@ -75,7 +75,7 @@ func (uh *userHandler) LogUser() echo.HandlerFunc {
 		}
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success login",
-			"token":   common.GenerateToken(data.ID),
+			"token":   common.GenerateToken2(data.ID, data.Role),
 			"role":    data.Role,
 		})
 	}
@@ -83,7 +83,8 @@ func (uh *userHandler) LogUser() echo.HandlerFunc {
 
 func (uh *userHandler) GetProfile() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		id := common.ExtractData(c)
+		// id := common.ExtractData(c)
+		id, _ := common.ExtractData2(c)
 
 		data, err := uh.userUsecase.GetProfile(id)
 

@@ -80,7 +80,9 @@ func (oh *orderHandler) InsertOrder() echo.HandlerFunc {
 
 		fmt.Println(tmp)
 
-		var userid = common.ExtractData(c)
+		// var userid = common.ExtractData(c)
+		userid, _ := common.ExtractData2(c)
+
 		data, err := oh.orderUsecase.AddOrder(common.ExtractData(c), tmp.ToDomain())
 
 		if err != nil {

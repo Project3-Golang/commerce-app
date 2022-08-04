@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"commerce-app/domain"
+	"commerce-app/feature/common"
 	"log"
 	"net/http"
 	"strconv"
@@ -28,17 +29,21 @@ func (ph *productHandler) InsertProduct() echo.HandlerFunc {
 			log.Println("Cannot parse data", err)
 			c.JSON(http.StatusBadRequest, "error read input")
 		}
-
-		// Cekadmin, role := common.ExtractData_Admin(c)
-		// fmt.Println(Cekadmin)
+		_, role := common.ExtractData2(c)
 		// fmt.Println(role)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can Insert Product Data",
+			})
+		}
 
 		data, err := ph.productUsecase.AddProduct(tmp.ToDomain())
 		if err != nil {
 			log.Println("Cannot proces data", err)
 			c.JSON(http.StatusInternalServerError, err)
-		}
 
+		}
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message": "success create data",
 			"data":    data,
@@ -62,6 +67,15 @@ func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
 		if res != nil {
 			log.Println(res, "Cannot parse data")
 			return c.JSON(http.StatusInternalServerError, "error read update")
+		}
+
+		_, role := common.ExtractData2(c)
+		// fmt.Println(role)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can update Product Data",
+			})
 		}
 
 		if tmp.Name != "" {
@@ -96,6 +110,7 @@ func (ph *productHandler) UpdateProduct() echo.HandlerFunc {
 			"Images":      data.Images,
 			"message ":    "Update Data Sukses",
 		})
+
 	}
 }
 
@@ -106,6 +121,15 @@ func (ph *productHandler) DeleteProduct() echo.HandlerFunc {
 		if err != nil {
 			log.Println("Cannot convert to int", err.Error())
 			return c.JSON(http.StatusInternalServerError, "cannot convert id")
+		}
+
+		_, role := common.ExtractData2(c)
+		// fmt.Println(role)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can delete Product Data",
+			})
 		}
 
 		data, err := ph.productUsecase.DelProduct(cnv)
@@ -120,6 +144,7 @@ func (ph *productHandler) DeleteProduct() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success delete product",
 		})
+
 	}
 }
 
