@@ -29,44 +29,44 @@ func (pu *orderUseCase) AddOrder(newOrder domain.Order) (domain.Order, error) {
 	return res, nil
 }
 
-// func (pd *productUseCase) GetSpecificProduct(productID int) ([]domain.Product, error) {
-// 	res := pd.productData.GetProductID(productID)
-// 	if productID == -1 {
-// 		return nil, errors.New("error get Product")
-// 	}
+func (pu *orderUseCase) GetSpecificOrder(orderID int) ([]domain.Order, error) {
+	res := pu.orderData.GetOrderID(orderID)
+	if orderID == -1 {
+		return nil, errors.New("error get Order")
+	}
 
-// 	return res, nil
-// }
+	return res, nil
+}
 
-// func (pd *productUseCase) GetAllP() ([]domain.Product, error) {
-// 	res := pd.productData.GetAll()
+func (pu *orderUseCase) GetAllO() ([]domain.Order, error) {
+	res := pu.orderData.GetAll()
 
-// 	if len(res) == 0 {
-// 		return nil, errors.New("no data found")
-// 	}
+	if len(res) == 0 {
+		return nil, errors.New("no data found")
+	}
 
-// 	return res, nil
-// }
+	return res, nil
+}
 
-// func (pd *productUseCase) UpProduct(IDProduct int, updateData domain.Product) (domain.Product, error) {
+func (pu *orderUseCase) UpOrder(IDOrder int, updateData domain.Order) (domain.Order, error) {
 
-// 	if IDProduct == -1 {
-// 		return domain.Product{}, errors.New("invalid product")
-// 	}
-// 	result := pd.productData.Update(IDProduct, updateData)
+	if IDOrder == -1 {
+		return domain.Order{}, errors.New("invalid order")
+	}
+	result := pu.orderData.Update(IDOrder, updateData)
 
-// 	if result.ID == 0 {
-// 		return domain.Product{}, errors.New("error update product")
-// 	}
-// 	return result, nil
-// }
+	if result.ID == 0 {
+		return domain.Order{}, errors.New("error update")
+	}
+	return result, nil
+}
 
-// func (pd *productUseCase) DelProduct(IDProduct int) (bool, error) {
-// 	res := pd.productData.Delete(IDProduct)
+func (pu *orderUseCase) DelOrder(IDOrder int) (bool, error) {
+	res := pu.orderData.Delete(IDOrder)
 
-// 	if !res {
-// 		return false, errors.New("failed delete")
-// 	}
+	if !res {
+		return false, errors.New("failed delete")
+	}
 
-// 	return true, nil
-// }
+	return true, nil
+}
