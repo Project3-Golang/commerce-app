@@ -38,17 +38,6 @@ func (od *orderData) Update(orderID int, updatedOrder domain.Order) domain.Order
 	return cnv.ToDomain()
 }
 
-// func (od *orderData) Update(orderID int, updatedOrder domain.Order) domain.Order {
-// 	cnv := ToLocal(updatedOrder)
-// 	err := od.db.Model(cnv).Where("ID = ?", orderID).Updates(updatedOrder)
-// 	if err.Error != nil {
-// 		log.Println("Cannot update data", err.Error.Error())
-// 		return domain.Order{}
-// 	}
-// 	cnv.ID = uint(orderID)
-// 	return cnv.ToDomain()
-// }
-
 func (od *orderData) Delete(orderID int) bool {
 	err := od.db.Where("ID = ?", orderID).Delete(&Order{})
 	if err.Error != nil {
