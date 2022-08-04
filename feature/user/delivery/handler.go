@@ -52,7 +52,11 @@ func (uh *userHandler) InsertUser() echo.HandlerFunc {
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message": "success create data",
 			"data":    data,
+<<<<<<< HEAD
 			"token":   common.GenerateToken2(data.ID, data.Role),
+=======
+			"token":   common.GenerateToken(data.ID, data.Role),
+>>>>>>> 47be84d69ec02dc044d2d4711033181d9c0430c9
 		})
 	}
 }
@@ -73,18 +77,31 @@ func (uh *userHandler) LogUser() echo.HandlerFunc {
 		if row == -1 {
 			return c.JSON(http.StatusBadRequest, "email or password incorrect")
 		}
+
+		token := common.GenerateToken(int(data.ID), data.Role)
+		var res = map[string]interface{}{}
+		res["token"] = token
+		res["Role"] = data.Role
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success login",
+<<<<<<< HEAD
 			"token":   common.GenerateToken2(data.ID, data.Role),
 			"role":    data.Role,
+=======
+			"data":    res,
+>>>>>>> 47be84d69ec02dc044d2d4711033181d9c0430c9
 		})
 	}
 }
 
 func (uh *userHandler) GetProfile() echo.HandlerFunc {
 	return func(c echo.Context) error {
+<<<<<<< HEAD
 		// id := common.ExtractData(c)
 		id, _ := common.ExtractData2(c)
+=======
+		id, _ := common.ExtractData(c)
+>>>>>>> 47be84d69ec02dc044d2d4711033181d9c0430c9
 
 		data, err := uh.userUsecase.GetProfile(id)
 
@@ -104,7 +121,7 @@ func (uh *userHandler) GetProfile() echo.HandlerFunc {
 
 func (uh *userHandler) DeleteUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		id := common.ExtractData(c)
+		id, _ := common.ExtractData(c)
 		if id == 0 {
 			return c.JSON(http.StatusUnauthorized, "Unauthorized")
 		}
@@ -123,7 +140,7 @@ func (uh *userHandler) UpdateUser() echo.HandlerFunc {
 		result := c.Bind(&tmp)
 
 		qry := map[string]interface{}{}
-		idUpdate := common.ExtractData(c)
+		idUpdate, _ := common.ExtractData(c)
 
 		if result != nil {
 			log.Println(result, "Cannot parse input to object")
