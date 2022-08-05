@@ -1,8 +1,65 @@
-<<<<<<< HEAD
-Don't push ke main yaa guys....
-wkwkw.....
-=======
-merge your code here
-please dont push to main
-https://github.com/Project3-Golang/commerce-app/blob/deployment/erd/git.png
->>>>>>> a58d743fc370148dea3b6a41d753c424c115f267
+# E-STORE.
+<div id="top"></div>
+<!-- PROJECT LOGO -->
+<br/>
+<div align="center">
+
+  <h3 align="center">Project-3 "4E-STORE." E-Store </h3>
+
+<!-- ABOUT THE PROJECT -->
+### 💻 &nbsp;About The Project
+
+E-Store Project
+<div>
+      <details>
+<summary>🙎 User</summary>
+  
+ 
+<div>
+
+</details>  
+
+<details>
+<summary>🎉 &nbsp;Event</summary>
+
+
+</details>
+
+<details>
+<summary>💬 &nbsp;Comment</summary>
+
+
+</details>
+
+<details>
+<summary>🗓&nbsp;Attendees</summary>
+  
+  <!---
+  | Command | Description |
+| --- | --- |
+  --->
+
+
+</details>
+
+<!-- IMAGES -->
+### 🖼&nbsp;Images
+
+<details>
+<summary>📈&nbsp;ERD</summary>
+<img src="https://github.com/Project3-Golang/commerce-app/blob/deployment/erd/git.png">
+</details>
+
+<!-- CONTACT -->
+### Contact
+
+[![GitHub Tyas](https://img.shields.io/badge/-Tyas-white?style=flat&logo=github&logoColor=black)](https://github.com/reski-id)
+
+[![GitHub Rafki](https://img.shields.io/badge/-Rafki-white?style=flat&logo=github&logoColor=black)](https://github.com/Rafkimaisya)
+
+
+<p align="center">:copyright: 2022 | Rezki Rafki</p>
+</h3>
+
+
+
