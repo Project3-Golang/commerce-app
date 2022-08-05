@@ -20,19 +20,19 @@ E-Store Project
 </details>  
 
 <details>
-<summary>🎉 &nbsp;Event</summary>
+<summary>🎉 &nbsp;Order</summary>
 
 
 </details>
 
 <details>
-<summary>💬 &nbsp;Comment</summary>
+<summary>💬 &nbsp;Product</summary>
 
 
 </details>
 
 <details>
-<summary>🗓&nbsp;Attendees</summary>
+<summary>🗓&nbsp;Cart</summary>
   
   <!---
   | Command | Description |
@@ -47,13 +47,13 @@ E-Store Project
 
 <details>
 <summary>📈&nbsp;ERD</summary>
-<img src="https://github.com/Project3-Golang/commerce-app/blob/deployment/erd/git.png">
+<img src="">
 </details>
 
 <!-- CONTACT -->
 ### Contact
 
-[![GitHub Rezki](https://img.shields.io/badge/-reski-id-white?style=flat&logo=github&logoColor=black)](https://github.com/reski-id)
+[![GitHub reski-id](https://img.shields.io/badge/-reski-id-white?style=flat&logo=github&logoColor=black)](https://github.com/reski-id)
 
 [![GitHub Rafki](https://img.shields.io/badge/-Rafki-white?style=flat&logo=github&logoColor=black)](https://github.com/Rafkimaisya)
 
