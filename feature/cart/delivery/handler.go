@@ -118,6 +118,13 @@ func (ch *cartHandler) DeleteCart() echo.HandlerFunc {
 
 func (ch *cartHandler) GetAllCart() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		_, role := common.ExtractData2(c)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can view all cart history",
+			})
+		}
 		data, err := ch.cartUsecase.GetAllC()
 
 		if err != nil {
@@ -140,6 +147,14 @@ func (ch *cartHandler) GetAllCart() echo.HandlerFunc {
 
 func (ch *cartHandler) GetCartID() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		_, role := common.ExtractData2(c)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can view all cart history",
+			})
+		}
+
 		idNews := c.Param("id")
 		id, _ := strconv.Atoi(idNews)
 		data, err := ch.cartUsecase.GetSpecificCart(id)

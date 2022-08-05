@@ -121,6 +121,14 @@ func (oh *orderHandler) DeleteOrder() echo.HandlerFunc {
 
 func (oh *orderHandler) GetAllOrder() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		_, role := common.ExtractData2(c)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can view all order history",
+			})
+		}
+
 		data, err := oh.orderUsecase.GetAllO()
 		if err != nil {
 			log.Println("Cannot get data", err)
@@ -142,6 +150,13 @@ func (oh *orderHandler) GetAllOrder() echo.HandlerFunc {
 
 func (oh *orderHandler) GetOrderID() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		_, role := common.ExtractData2(c)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can view order by id",
+			})
+		}
 		idOrder := c.Param("id")
 		id, _ := strconv.Atoi(idOrder)
 		data, err := oh.orderUsecase.GetSpecificOrder(id)
