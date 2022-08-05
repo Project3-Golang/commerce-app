@@ -30,7 +30,6 @@ func (ph *productHandler) InsertProduct() echo.HandlerFunc {
 			c.JSON(http.StatusBadRequest, "error read input")
 		}
 		_, role := common.ExtractData2(c)
-		// fmt.Println(role)
 
 		if role != "admin" {
 			return c.JSON(http.StatusCreated, map[string]interface{}{
