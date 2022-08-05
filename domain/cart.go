@@ -21,6 +21,7 @@ type CartUseCase interface {
 	UpCart(IDCart int, updateData Cart) (Cart, error)
 	DelCart(IDCart int) (bool, error)
 	GetSpecificCart(cartID int) ([]Cart, error)
+	GetmyCart(userID int) ([]Cart, error)
 }
 
 type CartHandler interface {
@@ -29,6 +30,7 @@ type CartHandler interface {
 	UpdateCart() echo.HandlerFunc
 	DeleteCart() echo.HandlerFunc
 	GetCartID() echo.HandlerFunc
+	GetMYCart() echo.HandlerFunc
 }
 
 type CartData interface {
@@ -37,4 +39,5 @@ type CartData interface {
 	Update(IDCart int, updatedCart Cart) Cart
 	Delete(IDCart int) bool
 	GetCartID(cartID int) []Cart
+	GetCartbyuser(userID int) []Cart
 }

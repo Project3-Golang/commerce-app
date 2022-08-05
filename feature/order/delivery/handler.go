@@ -121,6 +121,14 @@ func (oh *orderHandler) DeleteOrder() echo.HandlerFunc {
 
 func (oh *orderHandler) GetAllOrder() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		_, role := common.ExtractData2(c)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can view all order history",
+			})
+		}
+
 		data, err := oh.orderUsecase.GetAllO()
 		if err != nil {
 			log.Println("Cannot get data", err)
@@ -142,6 +150,13 @@ func (oh *orderHandler) GetAllOrder() echo.HandlerFunc {
 
 func (oh *orderHandler) GetOrderID() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		_, role := common.ExtractData2(c)
+
+		if role != "admin" {
+			return c.JSON(http.StatusCreated, map[string]interface{}{
+				"message": "Only Admin can view order by id",
+			})
+		}
 		idOrder := c.Param("id")
 		id, _ := strconv.Atoi(idOrder)
 		data, err := oh.orderUsecase.GetSpecificOrder(id)
@@ -151,6 +166,22 @@ func (oh *orderHandler) GetOrderID() echo.HandlerFunc {
 		}
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "success get data",
+			"data":    data,
+		})
+	}
+}
+func (oh *orderHandler) GetMYOrder() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// idNews := c.Param("id")
+		userid, _ := common.ExtractData2(c)
+		data, err := oh.orderUsecase.GetmyOrder(userid)
+
+		if err != nil {
+			log.Println("Cannot get data", err)
+			return c.JSON(http.StatusBadRequest, "cannot read input")
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "success get my order",
 			"data":    data,
 		})
 	}
