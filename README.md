@@ -53,7 +53,7 @@ E-Store Project
 <!-- CONTACT -->
 ### Contact
 
-[![GitHub Tyas](https://img.shields.io/badge/-reski-id-white?style=flat&logo=github&logoColor=black)](https://github.com/reski-id)
+[![GitHub Rezki](https://img.shields.io/badge/-reski-id-white?style=flat&logo=github&logoColor=black)](https://github.com/reski-id)
 
 [![GitHub Rafki](https://img.shields.io/badge/-Rafki-white?style=flat&logo=github&logoColor=black)](https://github.com/Rafkimaisya)
 
